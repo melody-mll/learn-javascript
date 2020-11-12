@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Operator</title>
+</head>
+<body>
+	<div>操作符</div>
+<script type="text/javascript">
+	//操作符可以作用于任何值，意思是不限于整数——字符串、布尔值、浮点值，甚至对象都可以
+	//前缀操作符，变量的值会在求值之前改变
+	let a=20;
+	let b=13;
+	let c=--a+b;
+	console.log(c);
+	console.log(a);
+
+	//后缀操作符,后缀版递增和递减在语句被求值后才发生
+	let num1=12;
+	let num2=20;
+	let num3=num1--+num2;
+	let num4=num1+num2;
+	console.log(num3);
+	console.log(num4);
+
+	//按位与,转换为二进制，进行与运算
+	let yu=25&3;
+	console.log(yu);
+
+	//按位或,转换为二进制，进行或运算
+	let huo=25|3;
+	console.log(huo);
+
+	//逻辑非,可应用给 ECMAScript 中的任何值,首先将操作数转换为布尔值，然后再对其取反
+	console.log(!0);
+	console.log(!"sadsasf");
+	console.log(!123213);
+	//同时使用两个叹号（ !! ），相当于调用了转型函数 Boolean()
+	console.log(!!0);
+	console.log(!!"sadsasf");
+	console.log(!!123213);
+
+	//逻辑与
+	//对于逻辑与运算，第一个值如果是false则不会执行第二个值，
+	//第一个值是对象，会返回第二个值
+	let b1={a:1};
+	let b2={a:2};
+	console.log(b1&&"对象");
+	//第二个值是对象类型，第一个值布尔类型是true,会返回对象，第一个值是false，返回第一个值
+	console.log(true&&b1);
+	console.log("blue"&&b1);
+	console.log(NaN&&b1);
+	//两个都是对象，与运算后回返回第二个对象
+	console.log(b1&&b2);
+	
+	console.log(null&&"asd");
+
+	//逻辑或,第一个值如果是true则不会执行第二个值，
+	//在一定程度上可以说或与与运算是相反的
+	//如果两个操作数都是是 null,undefined,NaN ，则返回 null,undefined,NaN
+	let c1={a:3};
+	let c2={a:4};
+	console.log(c1||c2);
+	console.log(true||"luoji");
+	console.log(false||"luoji");
+
+	//指数运算符
+	console.log(Math.pow(3,2));
+	console.log(4**2);
+
+	//加法运算符
+	console.log(5+2);
+	console.log(12+"hasjkdhaskfdh");
+	console.log(2+true);
+
+	//相等操作符
+	//==会先进行强制类型转换
+	//===不会转换数据类型
+	let d1={a:1};
+	console.log(123=="123");
+	console.log(123==="123");
+	console.log(false==0);
+
+	//条件操作符,?前的值为true，返回第一个值，为false返回第二个值
+	let e1=12;
+	let e2=13;
+	console.log(e1>e2?"e1da":"e2da");
+
+	//逗号操作符，这种情况会返回逗号的最后一位数
+	let douhao = (5, 1, 4, 8, 0); // num 的值为 0
+	console.log(douhao);
+
+
+
+
+</script>
+</body>
+</html>
