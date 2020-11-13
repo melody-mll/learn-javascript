@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>statement</title>
+</head>
+<body>
+<div>statement</div>
+<script type="text/javascript">
+	//if语句里面的值不一定为布尔值，会自动调用boolean()函数
+	if("blue") console.log("blue");
+
+	//条件值为真的话，执行前面的语句，为false的话执行后面的语句
+	if(1) {console.log("true")}
+		else {console.log("false")}
+
+	//do-while语句，循环体中的代码执行后才会对退出条件进行求值，这是一种后测试语句
+	let i = 0;
+    do {
+         i += 2;
+         console.log(i);
+       } while (i <= 10);	
+
+    //while语句是一种先测试语句，与do-while语句有区别
+    let a=0;
+    while(a<10)
+    {
+    	a=a+2;
+    	console.log(a);
+    }  
+
+    //for循环
+    let b=10;
+    for(let c=0;c<=b;c++)
+    {
+    	console.log(c);
+    } 	
+
+    //for-in 语句，可以用for-in语句来循环遍历数组
+    var ee={
+    	a:1,
+    	b:2,
+    	c:3
+    }
+
+    //利用for-in取得对象的属性和值
+    for(let fff in ee)
+    {
+    	console.log(fff+ee[fff]);
+    }
+
+    //利用for-in循环遍历数组
+    var fors=new Array();
+    fors[0]="000";
+    fors[1]="111";
+    fors[2]="222";
+    fors[4]="444";
+    for(let ss in fors)
+    {
+    	document.write(fors[ss]+"</br>")
+    }
+
+    //for-of 语句
+    for (let dd of fors)
+    {
+    	document.write(dd);
+    }
+
+    //标签语句 label:statement,给语句添加标签
+    let str="";
+    start:
+    for(let i=0;i<4;i++)
+    {
+    	str=str+i;
+    }
+    console.log(str);
+
+    //break和continue语句
+    //break会立即中止循环,当tt等于4时，退出循环，we表示循环的次数
+    let we=0;
+    for(let tt=1;tt<9;tt++)
+    {
+    	if(tt%4==0)
+    	{
+    		break;
+    	}
+    	we++;
+    }
+    console.log(we);
+
+    //continue跳出当前循环，继续执行后续循环
+    let wes=0;
+    for(let tt=1;tt<9;tt++)
+    {
+    	if(tt%4==0)
+    	{
+    		continue;
+    	}
+    	wes++;
+    }
+    console.log(wes);
+
+    //switch语句,switch语句可以用于所有的数据类型
+    //传给 switch 语句的参数之所以是 true ，就是因为每个条件的表达式都会返回布尔值
+    var ff=3;
+    switch(true)
+    {
+    	case ff<0:console.log(1); break;
+    	case ff<2:console.log(2);break;
+    	case ff<3:console.log(3);break;
+    	case ff<4:console.log(4);break;
+    }
+
+    var ff=3;
+    switch(ff)
+    {
+    	case 0:console.log(1); break;
+    	case 2:console.log(2);break;
+    	case 3:console.log(3);break;
+    	case 4:console.log(4);break;
+    }
+
+
+</script>
+</body>
+</html>
