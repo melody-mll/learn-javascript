@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>变量，作用域，内存</title>
+</head>
+<body>
+<div>hahhahh</div><script type="text/javascript">
+	//变量，作用域，内存
+	//变量在调用函数时，外部的值不会变
+	function add(name){
+		name=name+10;
+		return name;
+	}
+	let count =10;
+	result=add(count);
+	console.log(count);
+	console.log(result);
+
+	//对象是按值传递的
+	function setname(obj)
+	{
+		obj.name="mll";
+		obj=new Object();
+		obj.name="xiaoming";
+	}
+	let person=new Object();
+	setname(person);
+	console.log(person.name);
+
+	//操作符，typeof只能辨别基础数据类型，Boolean，number，string，object，null，undefined
+	//对原始值比较有效，对引用值作用不大
+	let a=new Object();
+	let b="string";
+	let c;
+	console.log(typeof a);
+	console.log(typeof b);
+	console.log(typeof c);
+	console.log(b instanceof Object);
+
+	//如果变量是给定引用类型的实例，则 instanceof 操作符返回 true。
+	//引用值都是object实例
+	let arr=[1,2,3]
+	console.log(arr instanceof Array);
+	console.log(arr instanceof Object);
+	let obje={
+		a:1,
+		b:2,
+	}
+	console.log(obje instanceof Object);
+
+    //var 声明全局变量，全局都可获取
+	var color = "blue"; 
+    function changeColor() { 
+    //块级作用域，在changeColor内可以读取
+    let anotherColor = "red"; 
+    function swapColors() { 
+    let tempColor = anotherColor; 
+        anotherColor = color; 
+        color = tempColor; 
+
+    // 这里可以访问 color、anotherColor 和 tempColor 
+    } 
+    // 这里可以访问 color 和 anotherColor，但访问不到 tempColor 
+    swapColors(); 
+    } 
+    // 这里只能访问 color 
+    changeColor();
+
+    //使用var声明变量
+    function add(num1,num2)
+    {
+    	sum=num1+num2;
+    	return sum;
+    }
+    let sums=add(10,20);
+    console.log(11);
+    //使用var声明sum变量会报错，sum会是undefined，变量在函数外是访问不到的
+    //如果去除var声明，直接是sum=sum1+sum2，则会打印出sum的值，sum是全局上下文
+    console.log(sum);
+</script>
+</body>
+</html>
