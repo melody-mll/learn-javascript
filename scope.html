@@ -77,6 +77,42 @@
     //使用var声明sum变量会报错，sum会是undefined，变量在函数外是访问不到的
     //如果去除var声明，直接是sum=sum1+sum2，则会打印出sum的值，sum是全局上下文
     console.log(sum);
+
+    //let声明是块级作用域
+
+    if("string")
+    {
+    	let lets=10;
+    }
+    //会报错，表示lets是undefined;
+    //同样，如果是函数体内，或是switch内，外部都是访问不到的
+    //console.log(lets);
+
+    //var连续声明不会报错，let会报错,表示letss已经被声明,const变量也是不能连续声明
+    //const 声明暗示变量的值是单一类型且不可修改，
+    var vars=10;
+    var vars=11;
+    console.log(vars);
+    //let letss=10;
+    let letss=11;
+    //const consts=10;会和letss报相同的错；const声明的变量不能改变，再次声明，
+    const consts=11;
+
+    //let 的行为非常适合在循环中声明迭代变量
+    for (var i = 0; i < 10; ++i) {} 
+    console.log(i); // 10
+    
+    for (let j = 0; j < 10; ++j) {} 
+    //console.log(j);//会报错，表示j是undefined
+
+    //标识符查找
+    var biao="yes";
+    function getbiao()
+    {
+    	//如果在这里声明biao="no",则会打印出no
+    	return biao;
+    }
+    console.log(getbiao());
 </script>
 </body>
 </html>

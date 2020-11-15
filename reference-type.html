@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic reference type</title>
+</head>
+<body>
+	<div>Basic reference type</div>
+	<script type="text/javascript">
+		//新对象的创建，
+		//新对象通过使用 new 操作符后跟一个构造函数（constructor）来创建
+		//可以给对象增加属性，对象里面自带proto原型
+		let now =new Object();
+		now.name="date";
+		console.log(now); 
+
+		//Date,可以通过该构造方法获取当前的值
+		let date=new Date();
+		//可以通过date的相关方法取得当前日期的年月日，月数是从零开始记的，获取的月需要加一
+		console.log(date.getMonth());
+		console.log(date);
+
+        //创建一个表示“2019 年 5 月 23 日”的日期对象，
+		let someDate = new Date(Date.parse("May 23, 2019"));
+		//等同与上式，会自动调用date.parse方法
+		//let someDate = new Date("May 23, 2019");
+		console.log(someDate);
+
+		//日期格式化方法,打印为特定的格式，打印结果为：Thu May 23 2019
+		console.log(someDate.toDateString());
+
+		//日期/时间组件方法
+		//这两个方法都是获取日期的毫秒数
+		console.log(someDate.valueOf());
+		console.log(someDate.getTime());
+
+		//常用的一些日期组件方法
+		//getFullYear()  返回4位数年
+		//getMonth()  返回日期的月（0表示1月，11表示12月）
+		//getDate()  返回日期中的日（1~31）
+		//getDay() 返回日期中表示周几的数值（0表示周日，6表示周六）
+		//getHours()  返回日期中的时（0~23）
+		//setFullYear(year)  setMonth(month)  setDate(date) setHours(hours)对相关数据进行设置
+
+		let s1="string";
+		let s2=s1.substring(2);
+		console.log(s2);
+
+		//使用 new 调用原始值包装类型的构造函数，与调用同名的转型函数并不一样
+        let value=20;
+        num1=Number(value);
+        console.log(typeof num1);//调用的转型函数类型，打印出来是number类型
+        console.log(num1);//20
+        num2=new Number(value);
+        console.log(typeof num2);//构造函数类型，实例化一个对象，打印出来是object类型
+        console.log(num2);//
+
+        let falseObject = new Boolean(false);
+        let result = falseObject && true; 
+        console.log(result); // true???这个表达式是对 falseObject 对象而不是对它表示的值（false）求值,对象是true类型
+        console.log(falseObject);
+        //console.log(false&&true);
+
+        //number类型
+        let numbers=10;
+        console.log(numbers.toString(2));//括号的数字表示转换成的进制格式，结果是1010；
+        console.log(numbers.toFixed(2));//表示转换的几位小数，10.00，可以自动四舍五入
+
+        let numberObject = new Number(10); 
+        let numberValue = 10; 
+        console.log(typeof numberObject); // "object" 
+        console.log(typeof numberValue); // "number" 
+        //Number对象是 Number 类型的实例，而原始数值不是
+        console.log(numberObject instanceof Number); // true 
+        console.log(numberValue instanceof Number); // false
+
+        //String 是对应字符串的引用类型
+        let strings = "hello world！"; 
+        console.log(strings.length); // "11",计算的是字符及空格，符号的长度
+
+        let stringValue = "hello world"; 
+        console.log(stringValue.indexOf("o")); // 4
+
+        //字符串包含方法
+        //startsWith()头部含有,endsWith()尾部含有,includes()是否含有;
+
+        //字符串的原型上暴露了一个iterator 方法，表示可以迭代字符串的每个字符
+        let message = "abc"; 
+        let stringIterator = message[Symbol.iterator](); 
+        console.log(stringIterator.next()); // {value: "a", done: false}
+
+        //单例内置对象
+        
+
+	</script>
+
+</body>
+</html>
