@@ -97,6 +97,13 @@
     let letss=11;
     //const consts=10;会和letss报相同的错；const声明的变量不能改变，再次声明，
     const consts=11;
+    //const不可以给常量赋值，但是可以给对象增加属性
+    const app={};
+    app.name="mll";
+    console.log(app.name);
+    const o1={};
+    //o1={a:1};//会报错，不能给常量赋值
+    console.log(o1);
 
     //let 的行为非常适合在循环中声明迭代变量
     for (var i = 0; i < 10; ++i) {} 

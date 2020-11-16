@@ -77,8 +77,23 @@
         let strings = "hello world！"; 
         console.log(strings.length); // "11",计算的是字符及空格，符号的长度
 
+        //字符串拼接,一般可以使用加号直接拼接
+        let stringValues = "hello "; 
+        let resultss = stringValues.concat("world", "!");
+        console.log(resultss);
+
+        let stringValuess="hello";
+        console.log(stringValuess+"mll!!!");
+     
         let stringValue = "hello world"; 
-        console.log(stringValue.indexOf("o")); // 4
+        console.log(stringValue.indexOf("o")); // 4 获取的是索引值
+
+        //字符串提取方法
+        //slice()、substr()和 substring()
+        let stringstr="hello i am mll";
+        console.log(stringstr.slice(4));//一个数字表示从该位置到结束
+        console.log(stringstr.slice(3,11));//第一个数字表示起始值，第二个数字表示结束值，但不包含
+
 
         //字符串包含方法
         //startsWith()头部含有,endsWith()尾部含有,includes()是否含有;
@@ -88,8 +103,65 @@
         let stringIterator = message[Symbol.iterator](); 
         console.log(stringIterator.next()); // {value: "a", done: false}
 
+        //将字符串转换为大写字母
+        let stringValuea = "hello world"; 
+        console.log(stringValuea.toLocaleUpperCase()); // "HELLO WORLD"
+
+
         //单例内置对象
-        
+        //之前接触过的Object、Array 和 String
+        //两个单例内置对象：Global 和 Math。
+
+        //Global
+        //isNaN()、isFinite()、parseInt()和 parseFloat()，实际上都是 Global 对象的方法
+
+        //eval方法
+        //这个方法就是一个完整的 ECMAScript 解释器，它接收一个参数，即一个要执行的JavaScript字符串
+        eval("console.log('eval ')");//等同于console.log('eval ');
+        //可以在eval里定义一个函数，然后在外部引用
+        eval("function evals(){console.log('eval function')}");
+        evals();
+
+        //在内部的定义，变量不会提升
+        //eval("let msg = 'hello world';"); 
+        //console.log(msg);得到的结果是msg 是undefined；
+        //const let 是块级作用域在外部不能访问，var是全局作用域，可以访问msg
+        eval("var msg = 'hello world var msg';"); 
+        console.log(msg);
+
+        //window对象
+        //全局!!!条件下声明的对象都是window属性
+        var color = "red"; 
+        var say="hi say window";
+        function sayColor() { 
+        console.log(window.color); 
+        } 
+        window.sayColor(); // "red"
+        console.log(window.say);//var声明结果是hi say window ;;let或是const（块级）声明结果是undefined;
+
+        //Math
+        //min()和max()取一组数的最大值和最小值
+        let min=Math.min(1,2,3,4,5);
+        let max=Math.max(1,2,3,4,5);
+        console.log(min);
+        console.log(max);
+        //通过拓展运算符读取数组
+        let values = [1, 2, 3, 4, 5, 6, 7, 8]; 
+        let maxs = Math.max(...values);       
+        console.log(maxs);
+
+        //用于把小数值舍入为整数的 4 个方法：Math.ceil()（向上）、Math.floor()（向下）、Math.round()（四舍五入）和 Math.fround()
+
+        //Math.random()方法返回一个 0~1 范围内的随机数
+        //获取1~10之间的随机数
+        let numrandom= Math.floor(Math.random() * 10 + 1);
+        console.log(numrandom);
+
+        //Math的一些常用方法，Math.abs(x) 返回 x 的绝对值 ；；Math.sqrt(x) 返回 x 的平方根
+
+
+
+
 
 	</script>
 

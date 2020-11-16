@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>collection-reference-type</title>
+</head>
+<body>
+	<div>collection-reference-type</div>
+	<script type="text/javascript">
+		//Object
+
+		//创建object得两种实例方法
+		//含有自定义属性和proto原型方法
+		let obj=new Object();
+		//也可以使用let obj={}是等同于上式的let obj=new Object();
+		obj.name="objname";
+		console.log(obj);
+		let objs={
+			name:"objsname",
+			age:13
+		}
+		//中间带有空格的属性可以用【】的方式来添加属性
+		objs["first name"] = "Nicholas";	
+		console.log(objs);
+        //一般通过点语法来读取属性，也可以通过中括号加属性键的方式，（需要加引号）
+		console.log(objs.name);
+		console.log(objs["name"]);
+
+		//Array
+
+		//ECMAScript 数组与其他语言的数组不同的是，在数组内可以存储任意类型的数据
+		let arrays=[1,"string",{name:"mll",age:22}];
+		console.log(arrays);//打印出来的数组包含索引，内容，length，proto
+
+		//创建数组的基本方法
+		let arrayValue=new Array();//创建空数组
+		console.log(arrayValue);
+		let arrayValues=new Array(2);//创建长度为2的空数组
+		console.log(arrayValues);
+		let arrayinclude=new Array("mll",23,"hahah");//创建有指定元素的数组
+		console.log(arrayinclude);
+		//在使用构造函数创建数组时，可以省略new关键字
+		//与对象一样，在使用数组字面量表示法创建数组不会调用 Array 构造函数，例如;let arr=[1,2,3];
+		
+	</script>
+
+</body>
+</html>
