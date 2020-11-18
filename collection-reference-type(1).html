@@ -199,9 +199,53 @@
         //第一个参数表示插入的位置，第二个参数表示删除的数量，后面的参数表示需要插入的值，同时可以表示替换操作
         console.log(spl);
 
-        //搜索和位置方法
+        //搜索和位置方法  按严格相等搜索和按断言函数搜索
         //严格相等
         //indexOf()、lastIndexOf()和 includes()
+        //indexOf(),lastIndexOf()都是查找元素在数组中的位置，includes()表示数组中是否含有要查找的数据
+        let numbers=[0,1,2,3,4,3,2,5,6];
+        let inof=numbers.indexOf(7);//返回查找到的第一个索引值，没找到返回-1
+        console.log(inof);
+        let lastof=numbers.lastIndexOf(2);//从后向前查找
+        console.log(lastof);
+        let inclu=numbers.includes(3);//返回bool值
+        console.log(inclu);
+
+        //find() 和 findIndex()
+        let people=[
+        {
+                name:"xiaoming",
+                age:19
+        },
+        {
+                name:"xiaozhang",
+                age:30
+        },
+         {
+                name:"xiaowang",
+                age:20
+        }]
+       console.log(people.find((element,index,array)=> element.age<21));//返回的是满足条件的第一个值，对象类型
+       console.log(people.findIndex((element,index,array)=>element.age<21));//返回的是满足条件的第一个值的索引值
+
+       //迭代方法
+       //every(),filter(),forEach(),map(),some()
+       let number=[1,2,3,4,2,5,3,6,6,7,8,9];
+       let everys=number.every((item,index,array)=>item>1);//返回布尔值，每一项都满足条件才返回true；
+       let somes=number.some((item,index,array)=>item<5);//返回布尔值，只要有一项满足条件就返回true;
+       let filters=number.filter((item,index,array)=>item>3);//返回满足条件的数组对象
+       let maps=number.map((item,index,array)=>item+10);//对原数组进行函数运算，返回计算后的数组
+        number.forEach(function(element){
+        console.log(element);//遍历数组
+       })
+       console.log(everys);
+       console.log(somes);
+       console.log(filters);
+       console.log(maps);
+
+       //归并方法
+       //reduce() 方法从数组第一项开始遍历到最后一项。而 reduceRight() 从最后一项开始遍历至第一项
+       //接收 4 个参数：上一个归并值、当前项、当前项的索引和数组本身
 
 
 
