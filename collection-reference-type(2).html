@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>集合引用类型</title>
+</head>
+<body>
+	<div>定型数组</div>
+	<script type="text/javascript">
+		//定型数组
+		// ArrayBuffer
+		//是一个构造函数，可用于在内存中分配特定数量的字节空间
+		let buff=new ArrayBuffer(16);
+		console.log(buff.byteLength);
+
+		let ints = new Int16Array([1, 2, 3]);
+		for(const int of ints)
+		{
+			console.log(int);
+		}
+
+		//set() 从提供的数组或定型数组中把值复制到当前定型数组中指定的索引位置
+		const container = new Int16Array(8);
+        // 把定型数组复制为前 4 个值
+        // 偏移量默认为索引 0
+        container.set(Int8Array.of(1, 2, 3, 4));
+        const sub=Int16Array.of(1,2,3,4,5,6);
+        const subarr=sub.subarray(2);
+        console.log(subarr);
+
+        //Map
+        // Map 的大多数特性都可以通过 Object 类型实现，但二者之间还是存在一些细微的差异
+        let maps=new Map();//创建一个空映射
+        //在创建同时初始化实例
+        let m1=new Map([
+        	["key1","value1"],
+        	["key2","value2"],
+        	["key3","value3"]])
+        console.log(m1);
+        //使用自定义迭代器初始化实例
+        let m2=new Map({
+        	[Symbol.iterator]:function *(){
+        		yield ["key1","value1"];
+        		yield ["key2","value2"];
+        		yield ["key3","value3"];
+        	}
+        })
+        console.log(m2.size);//得到键值对的数量
+        //可以用has(),get()进行查询
+        console.log(m2.get("key1"));//得到value值
+        console.log(m2.has("key1"));//true
+        //delete()删除指定的值，clear()删除所有的值
+
+        //Map的顺序与迭代
+        let m3=new Map([
+        	["key1","val1"],
+        	["key2","val2"],
+        	["key3","val3"]
+        	])
+        console.log(m3);
+        //映射实例可以提供一个迭代器（ Iterator ），能以插入顺序生成 [key, value] 形式的数组
+        console.log(m3[Symbol.iterator]===m3.entries);
+        console.log(...m3);//可以通过扩展运算把映射实例转换为数组
+        //选择object还是map
+        //给定固定大小的内存， Map 大约可以比 Object 多存储 50%的键/值对
+        //如果代码涉及大量插入操作，那么显然 Map 的性能更佳
+        //如果代码涉及大量查找操作，那么某些情况下可能选择 Object 更好一些
+        //如果代码涉及大量删除操作，那么毫无疑问应该选择 Map
+
+
+        //WeakMap
+        const wm = new WeakMap();//实例化
+        //键只能是 Object 或者继承自 Object 的类型，值的类型没有限制
+
+
+
+		
+	</script>
+
+</body>
+</html>
