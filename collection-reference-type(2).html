@@ -5,6 +5,7 @@
 </head>
 <body>
 	<div>定型数组</div>
+	<button id="login">登录</button>
 	<script type="text/javascript">
 		//定型数组
 		// ArrayBuffer
@@ -70,6 +71,56 @@
         //WeakMap
         const wm = new WeakMap();//实例化
         //键只能是 Object 或者继承自 Object 的类型，值的类型没有限制
+        let key1={id:1};//键的类型必须是对象类型
+        let key2={id:2};
+        wm.set(key1,"aaa")
+        .set(key2,"bbb");
+        console.log(wm);
+        console.log(wm.has(key1));
+        console.log(wm.get(key1));
+
+        // const maplogin=new WeakMap();
+        // const maploginbutton=document.querySelector('#login');
+        // maplogin.set(maploginbutton,{disabled:false});
+
+        //set
+        //创建一个空集合
+        let sets=new Set();
+        let s1=new Set(["val11","val22","val33"]);//通过数组初始化集合
+        console.log(s1);
+        console.log(s1.size);
+        let s2=new Set({
+        	[Symbol.iterator]:function *()//通过自定义迭代器初始化集合
+        	{
+        		yield "val111";
+        		yield "val222";
+        		yield "val333";
+        	}
+        	});
+        console.log(s2);
+        //可以通过add增加值，通过has查询，delete(删除指定值)，clear删除所有值
+        s2.add("val444");//是集合类型，集合内部的元素不可重复
+        console.log(s2);
+        console.log(s2.has("val111"));
+        console.log(s2.delete("val111"));//返回的是集合中是否有这个元素，返回布尔值，若是有true，则将该元素删除
+        console.log(s2);//
+
+        let s3=new Set(["a1","a2","a3"]);
+        console.log(s3.values===s3[Symbol.iterator]);
+        console.log(s3.keys===s3[Symbol.iterator]);
+        for (let t of s3.values())
+        	console.log(t);
+
+        let a4=new Set(["vala"]);
+        //字符串原始值为值不会被修改
+        for(let value of a4.values())
+        {
+        	value="valb";
+        	console.log(value);
+        	console.log(a4.has("vala"));
+        }
+
+
 
 
 
