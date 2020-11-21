@@ -7,11 +7,19 @@
 	<div>定型数组</div>
 	<button id="login">登录</button>
 	<script type="text/javascript">
+
 		//定型数组
-		// ArrayBuffer
-		//是一个构造函数，可用于在内存中分配特定数量的字节空间
-		let buff=new ArrayBuffer(16);
-		console.log(buff.byteLength);
+		// ArrayBuffer ArrayBuffer 是所有定型数组及视图引用的基本单位
+		//是一个js构造函数，可用于在内存中分配特定数量的字节空间
+		let buff=new ArrayBuffer(16);//一创建就不能改变大小
+                let buff2=buff.slice(3,7);//可以通过slice（）复制全部或部分到新实例中
+                console.log(buff.byteLength);
+                console.log(buff2.byteLength);
+
+                let bufft= new Int16Array([1, 2, 3])
+                let buff3=bufft.map(x=>x*2);
+                console.log(buff3 instanceof Int16Array);//返回新数组的方法也会返回包含同样元素类型的新定型数组
+
 
 		let ints = new Int16Array([1, 2, 3]);
 		for(const int of ints)
@@ -19,14 +27,18 @@
 			console.log(int);
 		}
 
-		//set() 从提供的数组或定型数组中把值复制到当前定型数组中指定的索引位置
-		const container = new Int16Array(8);
+	//set() 从提供的数组或定型数组中把值复制到当前定型数组中指定的索引位置
+	const container = new Int16Array(8);
         // 把定型数组复制为前 4 个值
         // 偏移量默认为索引 0
         container.set(Int8Array.of(1, 2, 3, 4));
+        console.log(container);//Int16Array(8) [1, 2, 3, 4, 0, 0, 0, 0]
+
+        //subarray 会基于从原始定型数组中复制的值返回一个新定型数组
         const sub=Int16Array.of(1,2,3,4,5,6);
-        const subarr=sub.subarray(2);
-        console.log(subarr);
+        const subarr=sub.subarray(2);//可以选择开始索引和结束索引
+        console.log(subarr);//Int16Array(4) [3, 4, 5, 6]
+
 
         //Map
         // Map 的大多数特性都可以通过 Object 类型实现，但二者之间还是存在一些细微的差异
@@ -36,6 +48,7 @@
         	["key1","value1"],
         	["key2","value2"],
         	["key3","value3"]])
+        m1.set("key4","value4");//通过set增加值
         console.log(m1);
         //使用自定义迭代器初始化实例
         let m2=new Map({
@@ -60,6 +73,14 @@
         console.log(m3);
         //映射实例可以提供一个迭代器（ Iterator ），能以插入顺序生成 [key, value] 形式的数组
         console.log(m3[Symbol.iterator]===m3.entries);
+        for (let i of m3.entries())
+        {
+                console.log(i);//得到三个数组对象
+        }
+        for (let key of m3.keys())//同时可以通过values()得到对象的值
+        {
+                console.log(key);//得到key1,key2,key3，得到对象的键
+        }
         console.log(...m3);//可以通过扩展运算把映射实例转换为数组
         //选择object还是map
         //给定固定大小的内存， Map 大约可以比 Object 多存储 50%的键/值对
@@ -119,6 +140,85 @@
         	console.log(value);
         	console.log(a4.has("vala"));
         }
+
+        class XSet extends Set { 
+           union(...sets) { 
+           return XSet.union(this, ...sets) 
+            }
+        }
+
+        // 返回两个或更多集合的并集
+        // static union(a, ...bSets) {
+        //         const unionSet=new XSet(a);
+        //         for(const b of bSets){
+        //                 for(const bValue of b){
+        //                         unionSet.add(bValue);
+        //                 }
+        //         }
+        //         return unionSet;
+        // }
+
+
+        //WeakSet(弱集合)
+        let weakse=new WeakSet();
+        //弱集合的值只能是对象类型，只能是 Object 或者继承自 Object 的类型
+        let wval1={id:1};
+        let wval2={id:2};
+        let wval3={id:3};
+        weakse=([wval1,wval2,wval3]);
+        console.log(weakse);
+
+        //add()再添加新值，可以使用 has()查询，还可以使用 delete()删除
+        let strs=new String("hahhah");//将之包装成对象再赋予值
+        let weakstr=new WeakSet([wval3,wval2,strs]);
+        console.log(weakstr);
+        console.log(weakstr.has(wval1));
+
+        //对于弱集合的值，这些值不属于正式的引用，不会阻止垃圾回收
+        const wt=new WeakSet();
+        wt.add({});//没有指向这个对象的其他引用，这个会被垃圾回收掉
+        console.log(wt);
+
+        const wts=new WeakSet();
+        const adds={
+                val:{}
+        }
+        function removeReference() { //如果调用该方法，就会被回收掉
+                container.val = null; 
+        }
+        wts.add(adds.val);//利用adds维护对空对象的引用，不会被回收掉
+        console.log(wts);
+
+        //迭代与扩展操作
+        //array,定型数组，set,map都满足顺序迭代
+        let iteration=[
+                Array.of(1,211),
+                typearr=Int16Array.of(3,33),
+                new Set([[1,2],[3,4]]),
+                new Map([[7,77]])
+        ]
+        for (let value of iteration)
+        {
+                for (let x of value)
+                {
+                        console.log(x);
+                }
+        }
+
+        //扩展运算符可用于浅拷贝
+
+        const array1=[1,2,3];
+        const array2=[...array1];
+        console.log(array2);
+        console.log(array1===array2);//结果是false
+        //对于可迭代对象的构造函数也可以浅拷贝
+        let map1=new Map([[1,3],[2,4]]);
+        let map2=[...map1];
+        console.log(map1);
+
+
+
+
 
 
 
