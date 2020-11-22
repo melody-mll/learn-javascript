@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>iterrators and generators</title>
+</head>
+<body>
+	<div>iterrators and generators</div>
+	<script type="text/javascript">
+		//迭代
+		
+		//迭代：按照顺序反复多次执行一段程序，通常会有明确的终止条件
+		//计数循环就是一种最简单的迭代
+		for(let i=1;i<=3;i++)
+		{
+			console.log(i);
+		}
+
+		//迭代会在一个有序集合上进行，数组就是最基础的例子
+		let arr=["a","b","c"];
+		for (let collections=0;collections<arr.length;collections++ )
+		{
+			console.log(arr[collections]);//数组有已知的长度，每一项都可以通过索引获得
+		}
+
+		//Array.prototype.forEach()
+		//只适用于数组，没办法标识何时结束
+		let fors=["aa","bb","cc"];
+		fors.forEach((item)=>console.log(item));
+
+		//可以把可迭代对象理解成数组或集合这样的集合类型的对象
+		//包含的元素都是有限的，而且都具有无歧义的遍历顺序
+		let arra=[1,2,3,4];
+		let sets=new Set(["a","b","c"]);
+		console.log(arra);
+		console.log(sets);
+
+		//字符串，数组，映射，集合，arguments对象等都实现了 Iterable 接口
+		//必须暴露一个属性作为“默认迭代器”，这个属性必须使用特殊的 Symbol.iterator 作为键
+		let a=1;//
+		console.log(a[Symbol.iterator]);//undefinend
+		let b={a:1,b:2};
+		console.log(b[Symbol.iterator]);//undefinend
+		let c=[1,2,3];
+		let d=new Set(["1","2"]);
+		let e=new Map([[1,2],[2,3]]);
+		console.log(c[Symbol.iterator]);// ƒ values() { [native code] }
+		console.log(d[Symbol.iterator]);
+		console.log(e[Symbol.iterator]);//调用这个工厂函数会生成一个迭代器,
+		console.log(e[Symbol.iterator]());//MapIterator {1 => 2, 2 => 3}
+
+		//接收可迭代对象的原生语言特性包括for-of循环，数组解构，扩展运算符，array.from(),创建集合，创建映射，yield*操作符，在生成器中使用
+		//这些原生语言结构会在后台调用提供的可迭代对象的这个工厂函数，从而创建一个迭代器
+		//for-of循环
+		let fruit=["apple","orange","banana"];
+		for(let i of fruit)
+		{
+			console.log(i);
+		}
+		//扩展运算符
+		let fruits=[...fruit];
+		console.log(fruits);
+		//数组解构
+		let [aa,bb,cc]=fruit;
+		console.log(aa,cc,bb);
+		//Array.from();
+		let arr1=Array.from(fruit);
+		console.log(arr1);
+		//Set构造函数
+		let arr2=new Set(fruit);
+		console.log(arr2);
+		//Map构造函数(映射)
+		let arr3=fruit.map((item,index)=>[item,index]);
+		console.log(arr3);
+		let arr4=new Map(arr3);
+		console.log(arr4);
+		//如果对象原型链上的父类实现了 Iterable 接口，那这个对象也就实现了这个接口
+		class Arrr extends Array{}
+			//let t=new Arrr('aa','bb','cc');
+			let fooArr = new Arrr('foo', 'bar', 'baz');
+			for(let i of fooArr)
+			{
+				console.log(i);
+			}
+
+
+	    //迭代器协议
+	    //迭代器 API 使用 next()方法在可迭代对象中遍历数据
+	    //next()方法返回的迭代器对象包含两个属性：done 和 value
+	    let arrnext=["11","22","aa"];
+	    console.log(arrnext[Symbol.iterator]);
+	    let arrnexts=arrnext[Symbol.iterator]();//迭代器
+	    //每个迭代器都表示对可迭代对象的一次性有序遍历。不同迭代器的实例相互之间没有联系，只会独立地遍历可迭代对象
+	    let arrnextss=arrnext[Symbol.iterator]();
+	    console.log(arrnexts.next());//执行迭代
+	    arrnext.splice(1,0,"mll");//数组发生变化，迭代器相应也会变化
+		console.log(arrnexts.next());
+		console.log(arrnexts.next());
+		console.log(arrnexts.next());
+		console.log(arrnextss.next());
+		console.log(arrnextss.next());
+
+		//显式的迭代器实现和一个原生的迭代器实现
+		//原生的迭代器
+		let arrsss=["11","22"];
+		let arraa=arrsss[Symbol.iterator]();
+		console.log(arraa);
+		//显式的迭代器实现
+		class Foo{
+			[Symbol.iterator](){//手动构造一个迭代器
+				return{
+					next(){
+						return {done:false,value:"foo"}
+					}
+				}
+			}
+		}
+		let f=new Foo();
+		console.log(f[Symbol.iterator]());// {next: ƒ}
+
+		//Counter 类只能被迭代一定的次数：
+		class Counter{
+			constructor(item)
+			{
+				this.count=1,
+				this.item=item
+			}
+			next(){
+				if(this.count<this.item)
+				{
+					return {done:false,value:this.count++}
+				}
+				else {
+					return {done:true,value:undefined}
+				}
+			}
+			[Symbol.iterator](){
+				return this;
+			}
+		}
+		let counters=new Counter(3);
+		for(let i of counters)
+		{
+			console.log(i);//每个实例只能被迭代一次
+		}
+		for(let i of counters)
+		{
+			console.log(i);//这个不能执行，实例只能被执行一次
+		}
+
+
+
+	</script>
+
+</body>
+</html>
