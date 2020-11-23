@@ -117,6 +117,41 @@
 		let f=new Foo();
 		console.log(f[Symbol.iterator]());// {next: ƒ}
 
+
+		var someString=new String("hi");
+		let some=someString[Symbol.iterator]();
+		console.log(some.next());
+		
+		someString[Symbol.iterator]=function(){
+			return {
+				next:function(){this._first=true;
+					if(this._first)
+					{
+
+						this._first=false;
+						return {done:false,value:"first"}
+					}
+					else {
+						return this._first=false;
+					}
+				},
+
+			}
+		}
+		let somestr=someString[Symbol.iterator]();
+		console.log(somestr);
+		console.log(somestr.next());
+
+// let Counter = {
+// 	next() {
+// 		return {
+// 			value: 1,
+// 			done: fase
+// 		}
+// 	}
+// }
+
+
 		//Counter 类只能被迭代一定的次数：
 		class Counter{
 			constructor(item)
@@ -144,6 +179,7 @@
 		}
 		for(let i of counters)
 		{
+
 			console.log(i);//这个不能执行，实例只能被执行一次
 		}
 
