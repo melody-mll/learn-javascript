@@ -125,9 +125,7 @@
 		someString[Symbol.iterator]=function(){
 			return {
 				next:function(){this._first=true;
-					if(this._first)
-					{
-
+					if(this._first){
 						this._first=false;
 						return {done:false,value:"first"}
 					}
@@ -154,14 +152,12 @@
 
 		//Counter 类只能被迭代一定的次数：
 		class Counter{
-			constructor(item)
-			{
+			constructor(item){
 				this.count=1,
 				this.item=item
 			}
 			next(){
-				if(this.count<this.item)
-				{
+				if(this.count<this.item){
 					return {done:false,value:this.count++}
 				}
 				else {
@@ -173,15 +169,98 @@
 			}
 		}
 		let counters=new Counter(3);
-		for(let i of counters)
-		{
-			console.log(i);//每个实例只能被迭代一次
-		}
-		for(let i of counters)
-		{
+		//for-of循环本质是循环迭代器对象，取得的值是next()返回值里面的value值，done只是表示判断循环是否结束，只有含有迭代属性的才能被循环，例如对象就不具有迭代器属性，不能使用for-of循环
+		//如果需要使用for-of循环则需手动模拟一个迭代器
+		// for(let i of counters){
+		// 	console.log(i);//每个实例只能被迭代一次
+		// }
+		// for(let i of counters){
+		// 	console.log(i);//这个不能执行，实例只能被执行一次
+		// }
 
-			console.log(i);//这个不能执行，实例只能被执行一次
+
+		//提前终止迭代器
+		//for-of 循环通过 break 、 continue 、 return 或 throw 提前退出
+		for(let i of counters){
+			if(i>3)
+				break;
+			console.log(i);//1 2
 		}
+
+
+		//生成器
+		//生成器的形式是一个函数，函数名称前面加一个星号（ * ）表示它是一个生成器	
+		//可以定义函数的地方就可以定义生成器
+		//生成器函数声明
+		function * add(){
+
+		}
+		//生成器函数表达式
+		let adds=function * (){
+
+		}
+		//作为对象自变量方法声明生成器函数
+		let addss={
+			* addss (){
+
+			}
+		}
+		//作为类实例方法来声明生成器函数
+		class Add {
+			 * addsss(){
+
+			}
+		}
+
+		function * generatorFn(){
+			return "mll";
+		}	
+		let generatorf=generatorFn();
+		console.log(generatorf.next());//{value:"mll",done:true}
+
+		//通过yield中断执行
+		function * gene(){
+			yield '123';
+			yield '234';
+			return '456';
+		}
+		//yield 关键字只能在生成器函数内部使用,在其他地方使用会报错
+		let gen=gene();
+		console.log(gen.next());//{value:"123",done:false}
+		console.log(gen.next());
+		console.log(gen.next());//{value:"456",done:true}
+		console.log(gen.next());//{value:undefined,done:true}
+
+		//生成器对象作为可迭代对象
+
+		//yield关键字的多次使用
+		function * addFn(){
+			for(let i=0;i<=2;i++){
+				yield i;
+			}
+		}
+		let addfn=addFn();
+		console.log(addfn.next());
+		console.log(addfn.next());
+		console.log(addfn.next());
+		console.log(addfn.next());
+
+
+		function * addFnn(n){
+			for(let i=0;i<=n;i++){
+				yield i;
+			}
+		}
+		
+		for(let x of addFnn(2)){
+			console.log(x);
+		}
+		let addfnn=addFnn(2);
+		console.log(addfnn.next().value);
+		console.log(addfnn.next());
+		console.log(addfnn.next());
+		console.log(addfnn.next());
+
 
 
 
