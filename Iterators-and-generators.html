@@ -261,6 +261,48 @@
 		console.log(addfnn.next());
 		console.log(addfnn.next());
 
+		//可以使用星号增强 yield 的行为，让它能够迭代一个可迭代对象，从而一次产出一个值
+		//yield本质也是返回一个{value,done},value表示所迭代的值，done表示是否结束，done是true是停止迭代
+		function * yilFn(){
+			yield *[1,2];
+			yield *[2,3];
+			yield *[3,4];
+		}
+		let yil=yilFn();
+		for(let x of yil){
+			console.log(x);
+		}
+
+		//yield*本质上只是得到一连串单独的数，可以用把yield放在循环里得到同样的效果
+		function * yileFn(){
+			for(let x of [6,7,8]){
+				yield x;
+			}
+		}
+		for(let i of yileFn()){
+			console.log(i);
+		}
+
+		//yield*的值是done为true时的值，普通的迭代器的值为undefined;
+		function * truFn(){
+			console.log(yield *[1,2,3])
+		}
+		for(let i of truFn()){
+			console.log(i);//打印结果是1 2 3 undefined
+		}
+        
+        //对于生成器函数而言，得到的值是生成器函数return的值
+		function * trueFn(){
+			yield*[1,2,3];
+			return "aaaaa";
+		}
+		function * truesFn(){
+			console.log(yield *trueFn())
+		}
+		for(let i of truesFn()){
+			console.log(i);//打印结果是1 2 3 aaaaa
+		}
+
 
 
 
