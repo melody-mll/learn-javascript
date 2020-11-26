@@ -303,6 +303,40 @@
 			console.log(i);//打印结果是1 2 3 aaaaa
 		}
 
+		//使用yield实现递归算法
+		function * geneFunc(n){
+			if(n>0){
+			yield *geneFunc(n-1);
+			yield n-1;
+		}
+		}
+		for(let x of geneFunc(3)){
+			console.log(x);//0 1 2
+		}
+
+		//生成器作为默认迭代器
+		class Foos{
+			constructor(){
+				this.valus=[1,2,3]
+			}
+			* [Symbol.iterator](){
+				//生成器对象实现了iterator接口，返回的是{value,done}
+				//会自动调用类的构造函数，yield*会产出一连串的值
+				//生成器对象是可迭代的，可以在迭代中使用
+				yield* this.valus;
+			}
+		}
+		let Foonew=new Foos();//进行实例化
+		for(let x of Foonew)//本质就是循环迭代器的Symbol.iterator属性，得到value的值
+		{
+			console.log(x);
+		}
+
+		//提前中止生成器
+		//对于实现iterator接口的对象，一定有next()方法，next()方法可以得到迭代的值，还有一个可选的return()方法，用于提前中止迭代器
+		//生成器除了有这两个方法还有一个throw()方法
+		//return方法
+
 
 
 
