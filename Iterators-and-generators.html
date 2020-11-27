@@ -336,6 +336,48 @@
 		//对于实现iterator接口的对象，一定有next()方法，next()方法可以得到迭代的值，还有一个可选的return()方法，用于提前中止迭代器
 		//生成器除了有这两个方法还有一个throw()方法
 		//return方法
+		//return会强制生成器进入中止状态，且不可恢复
+		function * retuFunc(){
+			for (let i of [1,2,3,4]){
+				yield i;
+			}
+		}
+		let returns=retuFunc();
+		console.log(returns.next());
+		console.log(returns.return(7));//{value:7,done:true}
+		console.log(returns.next());//{value:undefined,done:true},迭代已经被中断
+
+		//throw()
+		//throw()方法会在暂停的时候注入一个错误对象，当错误对象在生成器内部没有被处理的时候，会中止生成器
+		function *throwFunc(){
+			for(let i of [1,2,3]){
+				yield i;
+			}
+		}
+		let throws=throwFunc();
+		console.log(throws.next());
+		try{
+			throws.throw("throw")
+		}catch(e){
+			console.log(e);
+		}
+		console.log(throws.next());//生成器已经被关闭，{value:undefined,done:true}
+
+		//当错误对象在生成器内部已经被处理了，那么生成器不会被关闭，但会跳过一个值
+		function *throwsFunc(){
+			for(let i of [1,2,3]){
+				try{
+					yield i;
+				}catch(e)
+				{
+					console.log(e);
+				}
+			}
+		}
+		let throwss=throwsFunc();
+		console.log(throwss.next());
+		throwss.throw("throw error");//错误在生成器内部已经被处理，value:2会被跳过，
+		console.log(throwss.next());//生成器不会被关闭，value:3还能继续执行
 
 
 
