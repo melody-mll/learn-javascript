@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>object</title>
+</head>
+<body>
+	<div>object</div>
+	<script type="text/javascript">
+		//可通过实例化的方法创建对象
+		let person=new Object();
+		person.name="mll";
+		person.age=22;
+		person.func=function(){
+			console.log(this.name);
+		}
+		person.func();
+		console.log(person);
+		//
+		let person1={
+			name:'mll',
+			age:22,
+			func(){
+				console.log(this.name);
+			}
+		}
+		person1.func();
+		//数据属性
+		//[Configurable]表示属性是否可以通过delete删除并重新定义
+		//[Enumerable]表示属性是否能够通过for-in循环返回
+		//[Writable]表示属性的值是否可修改,一般默认是true
+		//[Value]表示属性实际的值
+		//要修改属性的默认特性，就必须使用 Object.defineProperty()方法。这个方法接收 3 个参数：要给其添加属性的对象、属性的名称和一个描述符对象
+		let person2={};
+		Object.defineProperty(person2,"name",{
+			Writable:false,//设置为不可更改模式
+			value:'mll'
+		})
+		console.log(person2);//mll
+		person2.name="zyl";
+		console.log(person2.name);//mll
+
+		//访问器属性
+		//[[Configurable]]：表示属性是否可以通过 delete 删除并重新定义，是否可以修改它的特性
+		//[Enumerable]表示属性是否能够通过for-in循环返回
+		//[[Get]]：获取函数，在读取属性时调用。默认值为 undefined。
+		//[[Set]]：设置函数，在写入属性时调用。默认值为 undefined。
+
+		//定义多个属性
+		let book={};
+		Object.defineProperties(book,{
+			year_:{
+				value:2017
+			},
+			edition:{
+				value:1
+			},
+			year:{//访问器属性
+				get(){
+					return this.year_;
+				},
+				set(newValue){
+					if(newValue>2017){
+						this.year_=newValue;
+                        this.edition+=newValue-2017;
+					}
+				}
+			}
+		});
+		book.year=2018;
+		console.log(book.edition);
+
+		//读取属性的特性
+		//使用 Object.getOwnPropertyDescriptor()方法可以取得指定属性的属性描述符
+		//接受两个参数：属性所在的对象和要取得其描述符的属性名。
+		let descriptors = Object.getOwnPropertyDescriptor(book, "year_"); 
+		console.log(descriptors.value); // 2017 
+		console.log(descriptors.configurable); // false 
+		console.log(typeof descriptors.get); // "undefined" 
+		let descriptor = Object.getOwnPropertyDescriptor(book, "year"); 
+		console.log(descriptor.value); // undefined 
+		console.log(descriptor.enumerable); // false 
+		console.log(typeof descriptor.get); // "function"
+
+	</script>
+
+</body>
+</html>
