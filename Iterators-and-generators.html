@@ -306,7 +306,10 @@
 		//使用yield实现递归算法
 		function * geneFunc(n){
 			if(n>0){
-			yield *geneFunc(n-1);
+			yield *geneFunc(n-1);//采用栈的形式，先进后出
+			//geneFunc(2),geneFunc(1),geneFunc(0),
+			//然后出栈，此时返回geneFunc(0),n=1,返回0
+			//然后geneFunc(1)出栈，n=2,返回1
 			yield n-1;
 		}
 		}
@@ -378,6 +381,7 @@
 		console.log(throwss.next());
 		throwss.throw("throw error");//错误在生成器内部已经被处理，value:2会被跳过，
 		console.log(throwss.next());//生成器不会被关闭，value:3还能继续执行
+
 
 
 
