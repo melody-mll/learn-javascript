@@ -25,7 +25,7 @@
 		}
 		person1.func();
 		//数据属性
-		//[Configurable]表示属性是否可以通过delete删除并重新定义
+		//[Configurable]表示属性是否可以通过delete删除并重新定义，是否可以修改它的特性，以及是否可以把它改为访问器属性
 		//[Enumerable]表示属性是否能够通过for-in循环返回
 		//[Writable]表示属性的值是否可修改,一般默认是true
 		//[Value]表示属性实际的值
@@ -44,6 +44,27 @@
 		//[Enumerable]表示属性是否能够通过for-in循环返回
 		//[[Get]]：获取函数，在读取属性时调用。默认值为 undefined。
 		//[[Set]]：设置函数，在写入属性时调用。默认值为 undefined。
+		let books = { 
+				 year_: 2017, 
+				 edition: 1
+			};
+
+        //属性 year 被定义为一个访问器属性  
+		Object.defineProperty(books,"year",{
+			get(){
+				return this.year_;
+			},
+			set(newValue){
+				if(newValue>2017){
+					this.year_=newValue;
+					this.edition+=newValue-2017;
+				}
+
+			}
+		});
+		books.year=2018;
+		console.log(books.edition);
+
 
 		//定义多个属性
 		let book={};
@@ -72,14 +93,140 @@
 		//读取属性的特性
 		//使用 Object.getOwnPropertyDescriptor()方法可以取得指定属性的属性描述符
 		//接受两个参数：属性所在的对象和要取得其描述符的属性名。
-		let descriptors = Object.getOwnPropertyDescriptor(book, "year_"); 
+		let descriptors = Object.getOwnPropertyDescriptor(book, "year_");
+		//对于数据属性， 
 		console.log(descriptors.value); // 2017 
 		console.log(descriptors.configurable); // false 
 		console.log(typeof descriptors.get); // "undefined" 
 		let descriptor = Object.getOwnPropertyDescriptor(book, "year"); 
 		console.log(descriptor.value); // undefined 
 		console.log(descriptor.enumerable); // false 
-		console.log(typeof descriptor.get); // "function"
+		console.log(typeof descriptor.get); // "function"，get是一个获取函数的指针
+
+
+		//Object.getOwnPropertyDescriptors()静态方法，这个方法会在每个自由属性上调用Object.getOwnPropertyDescriptor()并在一个新对象中返回他们
+		console.log(Object.getOwnPropertyDescriptors(book));
+		//返回结果如下，返回的是一个对象类型，包含数据属性和访问器属性
+		//{year_: {…}, edition: {…}, year: {…}
+		//edition: {value: 1, writable: false, enumerable: false, configurable: false}
+		//year: {enumerable: false, configurable: false, get: ƒ, set: ƒ}
+		//year_: {value: 2017, writable: false, enumerable: false, configurable: false}
+
+
+		//合并对象
+		//为合并对象提供了Object.assign()方法，该方法接受一个目标对象，和一个或多个源对象作为参数
+		//，然后将每个源对象中可枚举（Object.propertyIsEnumerable()返回 true）和自有（Object.hasOwnProperty()返回 true）属性复制到目标对象
+
+
+		//简单的合并
+		let source,result,target;
+		target={};
+		source={id:1};
+		result=Object.assign(target,source);//将source里的属性复制给target
+		console.log(target);
+		console.log(result);//result返回的是修改后的目标对象
+
+		//这个方法会使用源对象上的[[Get]]取得属性的值，然后使用目标对象上的[[Set]]设置属性的值
+		let dest={},src={};
+        dest = { 
+				 set a(val) { 
+				 console.log(`Invoked dest setter with param ${val}`); 
+				 } 
+				}; 
+
+		src = { 
+		 get a() { 
+		 console.log('Invoked src getter'); 
+		 return 'foo'; 
+		 } 
+		};
+		//使用Object.assign方法时，该方法是将src的属性赋值给dest,本质上会调用src上的get()方法，所以会先打印出Invoked src getter,然后将返回值"foo",作为参数传递给dest,调用dest上的set方法来设置属性的值,此时foo作为参数传入，打印出Invoked dest setter with param foo,但是设置函数没有赋值操作，其实dest没有得到src的值，没有得到get()方法属性
+		Object.assign(dest, src);
+		console.log(dest);//{ set a(val) {...} }
+
+		//覆盖属性：当使用合并的Object.assign()方法时，如果后面的源对象含有一样的值，则会使用最后的一个值，对之前的值进行覆盖
+		let cover={id:2};
+		Object.assign(cover,{id:1,color:'yellow',name:'es'},{id:111,color:'red',age:12});
+		console.log(cover);
+
+		//对象标识及相等判定
+		//Object.is() 这个方法必须接收两个参数
+		console.log(Object.is(true, 1)); // false 
+		console.log(Object.is({}, {})); // false 
+		console.log(Object.is("2", 2)); // false
+		//要检查超过两个值，递归地利用相等性传递即可：
+
+		function check(x, ...rest) { 
+		 return Object.is(x, rest[0]) && 
+		 (rest.length < 2 || check(...rest)); 
+		}
+
+
+		//增强的对象语法
+		//属性值简写
+		let name='mll';
+		let obj={
+			name//这一步的写法是name:name，因为属性名和变量名一致，可以省略，如果上下文中没有name属性会报错
+		}
+		console.log(obj);
+
+		//会在不同作用域间保留属性名
+		function make(name)
+		{return{
+			name//这一步的写法是：name:name，将函数形参的name属性赋给name
+		}
+		}
+		let persons=make('xiaoming');//函数的返回值是一个对象类型，将该对象赋给persons,得到person={name:'xiaoming'}
+		console.log(persons.name);
+
+		//可计算属性
+		const nameKey = 'name'; 
+		const ageKey = 'age'; 
+		const jobKey = 'job'; 
+		let personm = { 
+		 [nameKey]: 'mll', 
+		 [ageKey]: 27, 
+		 [jobKey]: 'es' 
+		};
+		console.log(personm);//中括号包围的对象属性键告诉运行时将其作为 JavaScript 表达式而不是字符串来求值,
+
+		//简写方法名
+		let person3={
+			sayname:function(name){
+				console.log(name);
+			}
+		}
+		person3.sayname('mll');
+		//将上式简写
+		let person4={
+			sayname(name){
+				console.log(name);
+			}
+		}
+		person4.sayname('mll');
+
+
+		//简写方法名对获取函数和设置函数也是适用的
+		let saynames='sayName';
+		let personf = { 
+		 name_: '', 
+		 get name() { 
+		 return this.name_; 
+		 }, 
+		 set name(name) { 
+		 this.name_ = name; 
+		 }, 
+		 //简写方法名与可计算属性可兼容
+		 //sayName() { 
+		 //会将[saynames]得到sayName
+		 [saynames](){
+		 console.log(`My name is ${this.name_}`); 
+		 } 
+		};
+		personf.name = 'Matt'; 
+		personf.sayName(); // My name is Matt
+
+		
 
 	</script>
 
