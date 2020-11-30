@@ -226,6 +226,64 @@
 		personf.name = 'Matt'; 
 		personf.sayName(); // My name is Matt
 
+
+		//对象解构
+		let person5={
+			name:'mll',
+			age:22
+		}
+		let {name:personname,age:personage}=person5;
+		console.log(personname);
+		console.log(personage);
+
+		//可以简写为，将变量名简写为属性名
+		let person6={
+			color:'yellow',
+			job:'es'
+		}
+		//这句的完整形式·是{color:color,job:job},第二个color,job都是变量，为属性值简写
+		let {color,job}=person6;
+		console.log(color);
+		console.log(job);
+		//对于对象中不存在的值，打印出来是undefinend;
+		let person7={
+			colors:'red',
+			job:'es'
+		}
+		//let {colors,age}=person7;
+		let {colors,age=22}=person7;//可以解构赋值的同时赋给默认值
+		console.log(colors);
+		console.log(age);
+		//console.log(age);//undefinend
+
+		//嵌套解构
+		let person8={
+			name:"xiaoming",
+			age:23,
+			title:{
+				book:'es'
+			}
+		}
+		let personcopy={};
+		({name:personcopy.name,age:personcopy.age,title:personcopy.title}=person8);
+		console.log(personcopy);
+		person8.title.book='前端';//修改person8的值，personcopy的值也会发生变化
+		console.log(personcopy);
+
+		//
+		let person9={
+			job:{
+				title:'es'
+			}
+		}
+		let personcopys={};
+		({job:personcopys.job}=person9);
+		console.log(personcopys);
+		///let personcopyss={};
+		//({job:{title:personcopyss.job.title}}=person9);//外层属性没有定义的情况下不能使用嵌套赋值，title is undefinend
+		//console.log(personcopyss);
+
+
 		
 
 	</script>

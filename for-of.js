@@ -1,4 +1,4 @@
-
+debugger
 let obj = {
     name: 'mll',
     [Symbol.iterator]() {
