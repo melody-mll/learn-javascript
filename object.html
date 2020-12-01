@@ -283,6 +283,50 @@
 		//({job:{title:personcopyss.job.title}}=person9);//外层属性没有定义的情况下不能使用嵌套赋值，title is undefinend
 		//console.log(personcopyss);
 
+		//部分解构()
+		let persons11={
+			name:'mll',
+			age:22
+		}
+		let personsname,personsjob,personsage;
+		try{({name:personsname,job:{title:personsjob},age:personsage}=persons11);
+	    }
+		catch(e){}
+		console.log(personsname);//mll
+		console.log(personsjob);//undefinend 因为persons11中没有job属性，在解构赋值时会抛出错误，导致解构中止，后续的解构也没有完成，age:personsage也是undefiend
+		console.log(personsage);//undefinend
+
+		//参数上下文匹配
+		let person12={
+			name:"xiaohong",
+			age:23
+		}
+		function Func(a,{name,age},b){
+			console.log(arguments);
+			console.log(name,age);
+		}
+		Func("aaa",person12,"bbbb");//传入参数person12时，会解构赋值，得到name和age的值
+
+
+		//创建对象
+
+		//工厂模式
+		function createObject(name,age,job){
+			let newobj=new Object();
+			newobj.name=name;
+			newobj.age=age;
+			newobj.job=job;
+			newobj.sayName=function(){
+				console.log(this.name);
+			}
+			return newobj;
+		}
+		let theobj=createObject('mll',22,'前端');//函数实例化得到的值是函数的返回值,所以在函数的定义中需要返回所新建的对象
+	    theobj.sayName();
+		let theobjs=createObject('xiaozhang',23,'es');
+		console.log(theobjs.job);
+
+
 
 		
 
