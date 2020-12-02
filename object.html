@@ -327,6 +327,50 @@
 		console.log(theobjs.job);
 
 
+		//构造函数模式
+		//可以将上式转换为构造函数模式
+		function Personss(name,age,job){//自定义构造函数，函数名必须大写,构造函数的名称需要大写，非构造函数的名称是小写
+			this.name = name;//与上式的区别是，在函数体内部不需要构建一个新对象
+			this.age = age;//属性和方法都是直接赋值给了this
+			this.job = job;
+			this.sayName=function(){
+				console.log(this.name, 'this.name');
+			};//在函数体内部也不需要返回值
+		}
+		//也可写成函数表达式的形式
+		// let Personss=function (name,age,job){
+		// 	this.name = name;
+		// 	this.age = age;
+		// 	this.job = job;
+		// 	this.sayName=function(){
+		// 		console.log(this.name, 'this.name');
+		// 	};
+		// }
+
+		let rersonnew1=new Personss("mll",22,"前端");//需要实例化对象
+		let rersonnew2=new Personss("xioawang",23,"运营");
+		rersonnew1.sayName();
+		rersonnew2.sayName();
+		console.log(rersonnew2.constructor==Personss);//实例化后的对象含有一个constructor属性指向Personss
+
+		//构造函数与普通函数
+		//区别在于调用方式不同，任何函数只要用new调用就是构造函数
+
+		//原型模式
+		//每个函数都有一个prototype属性，在prototype上配置的属性和方法可以被实例化的对象访问
+		//将构造函数中赋值给对象实例的值，可以赋值给他们对象
+		function Person(){
+			//this.prototype.name="maolili";不可以使用this.prototype，因为实例化的时候调用该构造函数，此时的this指的是实例的对象，该对象上没有prototype属性
+			Person.prototype.name="maolili";
+			Person.prototype.age=12;
+			Person.prototype.sayName=function(){
+				console.log(Person.prototype.name);
+			}
+		}
+		let newper=new Person();
+		Object.getPrototypeOf(newper);
+		let newper2=new Person();
+		newper.sayName();
 
 		
 
