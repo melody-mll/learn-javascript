@@ -359,18 +359,42 @@
 		//原型模式
 		//每个函数都有一个prototype属性，在prototype上配置的属性和方法可以被实例化的对象访问
 		//将构造函数中赋值给对象实例的值，可以赋值给他们对象
-		function Person(){
+		function Person(){}			
 			//this.prototype.name="maolili";不可以使用this.prototype，因为实例化的时候调用该构造函数，此时的this指的是实例的对象，该对象上没有prototype属性
 			Person.prototype.name="maolili";
 			Person.prototype.age=12;
 			Person.prototype.sayName=function(){
 				console.log(Person.prototype.name);
 			}
-		}
 		let newper=new Person();
 		Object.getPrototypeOf(newper);
 		let newper2=new Person();
 		newper.sayName();
+
+		//用函数表达式的形式
+		let Person1=function(){};//这里所有的属性和方法都直接定义在原型上，函数体内没有内容
+		Person1.prototype.name="xiaoming";//对于构造函数创建的所有实例，都会在原型上拥有该属性
+		Person1.prototype.age=12;
+		Person1.prototype.sayName=function(){
+			console.log(Person1.prototype.name);
+		}
+		let newPer=new Person1();
+		newPer.sayName();
+
+		//理解原型
+		//只要创建一个函数，就会给他增加一个原型属性prototype
+		function newFunc(){}
+		let A=new newFunc();
+		console.log(A);//上面有一个_proto_属性，上面展开的是一个_proto_和constructor
+		console.log(newFunc==A.constructor);//结果是true
+		console.log(newFunc==newFunc.prototype.constructor);//结果是true
+		console.log(newFunc.prototype);//打印出来上有一个constructor属性，和一个_proto_属性
+		//其中constructor指向构造函数
+
+		//构造函数，原型，实例对象是三个不同的对象
+		//只要创建一个函数，对于构造函数上有prototype属性，而prototype上含有一个constructor和一个_proto_属性
+		//对于constructor，实例化后的对象或是该函数本身，他的constructor属性都指向构造函数本身
+		//实例化的对象，上面含有_proto_属性，该属性展开后上面constructor和_proto_
 
 		
 
