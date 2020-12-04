@@ -383,6 +383,8 @@
 
 		//理解原型
 		//只要创建一个函数，就会给他增加一个原型属性prototype
+		//实例与构造函数原型有直接的联系，与构造函数没有直接的联系
+		//实例上有一个_proto_属性，展开是_proto_和constructor属性，就是构造函数的prototype属性（包含_proto_）
 		function newFunc(){}
 		let A=new newFunc();
 		console.log(A);//上面有一个_proto_属性，上面展开的是一个_proto_和constructor
@@ -395,6 +397,58 @@
 		//只要创建一个函数，对于构造函数上有prototype属性，而prototype上含有一个constructor和一个_proto_属性
 		//对于constructor，实例化后的对象或是该函数本身，他的constructor属性都指向构造函数本身
 		//实例化的对象，上面含有_proto_属性，该属性展开后上面constructor和_proto_
+
+		//判断A实例上有没有指向构造函数的prototype属性
+		console.log(newFunc.prototype.isPrototypeOf(A));//true
+
+		//ECMAScript 的 Object 类型有一个方法叫 Object.getPrototypeOf() ，返回参数的内部特性[[Prototype]] 的值
+		console.log(Object.getPrototypeOf(A)==newFunc.prototype);//等式前面返回的是实例A的prototype属性，也是就构造函数的prototype属性
+
+		//setPrototyprOf()方法
+		//该方法可能严重影响代码性能
+		let set1={
+			name:'zhangsan'
+		};
+		let set2={
+			age:11
+		};
+        Object.setPrototypeOf(set2,set1);//将set1上的属性设置作为set2的原型上的属性
+		console.log(set2.age);//set2上的自带的属性
+		console.log(set2.name);//set2上的原型方法上的属性
+		console.log(Object.getPrototypeOf(set2)==set1);//true，表示set2的原型属性是set1的属性
+
+		//create()
+		//创建新对象，并为之增加原型对象
+		let cre={
+			name:'lisi'
+		}
+		let creat=Object.create(cre);//将cre设置作为creat的原型方法
+		creat.age=34;
+		console.log(creat.age);
+		console.log(creat.name);
+		console.log(Object.getPrototypeOf(creat)==cre);//true
+
+
+		//原型层级
+		//在访问对象属性时，会先在对象实例上的属性上查找，如果存在则返回该值，如果没有，会在对象的原型属性中查找，找到则返回
+		//因为查找的顺序是这样，所以当对象上对象属性和原型上都有该属性，对象上的属性虽然不会更改原型对象上的属性，但是对象上自带的属性会覆盖掉原型上的属性，读取到的值是对象上的值；如果对象上没有该属性，则是读取对象原型上的值。
+		//即使把对象属性上的同名属性设置为null也是不能访问原型上的同名属性
+		//可以通过delete来删除对象属性的同名属性
+		function Personde(){}			
+			Personde.prototype.name="maolili";
+			Personde.prototype.age=12;
+			Personde.prototype.sayName=function(){
+				console.log(Person.prototype.name);
+			}
+		let per1=new Personde();
+		let per2=new Personde();
+		per1.name='zhangsan';
+		console.log(per1.name);//zhangsan，是对象上的自带属性
+		console.log(per2.name);//maolili ，是原型上的属性
+		delete per1.name;
+		console.log(per1.name);//maolili.会访问原型上的属性
+
+		//hasOwnProperty()
 
 		
 
