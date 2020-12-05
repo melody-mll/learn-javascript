@@ -443,12 +443,96 @@
 		let per1=new Personde();
 		let per2=new Personde();
 		per1.name='zhangsan';
+		per1.age=12;
 		console.log(per1.name);//zhangsan，是对象上的自带属性
 		console.log(per2.name);//maolili ，是原型上的属性
 		delete per1.name;
 		console.log(per1.name);//maolili.会访问原型上的属性
 
-		//hasOwnProperty()
+		//hasOwnProperty()该方法用于确定某属性是在对象实例上还是在对象原型上
+		//是在对象实例上时返回true，在原型对象上返回false
+		console.log(per1.hasOwnProperty("name"));//false  该对象属性已经被删除，访问的是原型上的属性
+		console.log(per1.hasOwnProperty("age"));//true
+
+		//原型和in操作符
+		//in操作符使用的两种方式：单独使用和for-in循环中使用
+		//in操作符单独使用时，可以判断该属性是否存在，可以在对象属性上或者在对象的原型上，存在的话返回的是true;
+		console.log("name" in per1);//true 是原型上的属性
+		console.log("age" in per1);//true 是对象上的属性
+		console.log("job" in per1);//false 该对象上没有该属性
+
+		//确定某属性是否在原型对象上
+		function hasPrototype(object,name){
+			return !object.hasOwnProperty(name) && (name in object);//!false&&true
+
+		}
+		console.log(per1.hasOwnProperty("name"));//false
+		hasPrototype(per1,name);//返回的值是false,表示该属性是在对象的原型属性上
+		//因为name in object 表示对象上有该属性，object.hasOwnProperty("name"),对该属性进行判断在实例属性上时返回true,取反为false,&&运算后为false,表示是对象上的属性
+
+		//for-in循环中使用in操作符时,可以通过对象访问且可以被枚举的属性都会返回
+		//可枚举性是由属性的enumerable决定的,可枚举性决定了该属性是否能被for-in遍历到
+		//不可枚举的不可以被for-in循环
+		//Object, Array, Number等都是不可枚举的
+		var num=new Number();//Number内置的属性是不可枚举的
+		for(var pro in num) {
+		    console.log("num." + pro + " = " + num[pro]);
+		}
+
+		//
+		function Personenu(){};
+		Personenu.prototype.name="lixian";
+		Personenu.prototype.age=23;
+		Personenu.prototype.sayname=function(){
+			console.log(this.name);
+		}
+		//Object.keys()方法。这个方法接收一个对象作为参数，返回包含该对象所有可枚举属性名称的字符串数组
+		let perenu=new Personenu();
+		console.log(perenu.name);
+		console.log(Object.keys(Personenu.prototype));//name,age,sayname
+		perenu.name="wangzha";
+		perenu.age=99;
+		console.log(Object.keys(perenu));//name,age
+
+		//如果想列出所有实例属性，无论是否可以枚举，都可以使用 Object.getOwnPropertyNames()
+		console.log(Object.getOwnPropertyNames(Personenu.prototype));//返回的结果中包含了一个不可枚举的属性 constructor
+
+
+		//Object.keys()和 Object.getOwnPropertyNames()在适当的时候都可用来代替 for-in 循环
+		for(let i in perenu){
+			console.log(i);//在访问对象实例时，for-in循环可以遍历所有的属性但是Object.keys只是访问到实例上的实例属性
+		}
+
+		//对象迭代
+		//Object.values()和 Object.entries()接收一个对象，返回它们内容的数组
+		//Object.values()返回对象的值，Object.entries()返回对象的键值对
+
+
+		//符号属性会被忽略：
+		const sym = Symbol(); 
+		const o = { 
+		 [sym]: 'foo' 
+		};
+		console.log(Object.values(o));//符号属性被忽略，打印出来是[]
+
+		//其他原型语法
+		//可以将之前的原型对象重写
+		function Personnew(){}
+		Personnew.prototype={
+			name:"zyl",
+			age:22,
+			sayname(){
+				console.log(this.name);
+			}
+		}
+		console.log(Personnew.prototype);
+		Personnew.prototype.sayname();
+
+		//此时的Personnew的constructor属性不再指向Personnew
+		console.log(Personnew.prototype.constructor===Personnew);//false
+
+
+
 
 		
 
