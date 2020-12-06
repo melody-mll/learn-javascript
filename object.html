@@ -519,6 +519,7 @@
 		//可以将之前的原型对象重写
 		function Personnew(){}
 		Personnew.prototype={
+			constructor:Personnew,
 			name:"zyl",
 			age:22,
 			sayname(){
@@ -530,11 +531,45 @@
 
 		//此时的Personnew的constructor属性不再指向Personnew
 		console.log(Personnew.prototype.constructor===Personnew);//false
+		//当对constructor得值设置之后，打印出来得结果就是true
+		//如果constructor的值很重要，可以在定义Personnew.prototype时将constructor得值进行设置
+
+        let personne=new Personnew();
+        //原生得constructor是不可枚举类型，但是再prototype里面设置了之后就会变成枚举类型
+        console.log(Object.keys(Personnew.prototype));//会打印出constructor
 
 
+        //原型得动态性
+        let friend=new Personnew();
+        Personnew.prototype.sayhi=function(){
+        	console.log("say hi");
+        }
+        friend.sayhi();//虽然friend实例得建立是在原型得设置之前，但是也是可以访问到原型得变化，任何原型得修改再实例上都会反映出来。
 
+        //实例只有指向原型得指针，没有指向构造函数的指针;
+        //但是修改原型上的属性和重写原型是不同的概念,实例上的指针指的还是原来得原型对象
+        function Personmao() {} 
+		let friends = new Personmao(); 
+		Personmao.prototype = { 
+		 constructor: Person, 
+		 name: "Nicholas", 
+		 age: 29, 
+		 job: ["qian", "hou"],
+		 sayName() { 
+		 console.log(this.name); 
+		 } 
+		}; 
+		//friends.sayName();//会报错
 
-		
+		//原型得问题
+		//如果修改原型上的值，实例得对象会得到相同的话
+		let friend1=new Personmao();
+		let friend2=new Personmao();
+		friend1.job.push('测试');
+		console.log(friend1);
+		console.log(friend2);
+		console.log(friend2.job===friend1.job);//true
+		//新加得字符串是在friend1s上，但是再friend2上也是反映出来。
 
 	</script>
 
