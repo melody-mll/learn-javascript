@@ -28,6 +28,85 @@
 	console.log(instance.getSuperValue());//true,这个得到的是SuperType的property的值，来自于继承的值
 	console.log(instance.getSubValue());//false 这个是自己原型自定义的值
 
+	//默认原型
+	//任何函数的默认原型都是一个object的实例，实例上有一个指针指向object.prototype
+	//自定义类型能够继承包括 toString() 、 valueOf() 在内的所有默认方法
+
+	//instanceof 判断实例上的原型链上有没有该构造函数
+	console.log(instance instanceof Object); // true
+	console.log(instance instanceof SuperType); // true
+	console.log(instance instanceof SubType); //true
+	//isProtoTypeOf 判断原型链中是否包含这个原型
+    console.log(SuperType.prototype.isPrototypeOf(instance)); 
+
+	//关于方法
+	//对于上式，之前的表示
+	SubType.prototype.getSubValue=function(){
+		return this.subproperty;
+	}
+	//  重新定义后会覆盖已有的方法
+	SubType.prototype.getSuperValue = function () {
+	    return false;
+	};
+	console.log(instance.getSuperValue());//false
+
+	//通过字面量添加新方法，会导致之前继承的方法失效
+	SubType.prototype={
+		name(){
+			return 'mll';
+		},
+		subtypes(){
+			return this.subproperty;
+		}
+	}
+	let instances=new SubType();
+	//console.log(instances.getSuperValue());//此时会报错，表示该实例上没有该方法。
+
+	//原型链的问题
+
+	//原型链上的属性会在所有的实例上共享，表示如果更改某个实例上的原型属性，
+	//那么所有实例上的原型属性都会发生变化（前面已经提到）
+    //子类型在实例化时不能给父类型的构造函数传参
+
+	//盗用构造函数
+	//可以使用apply()和call()方法以新创建的对象为上下文执行构造函数
+	function SuperType() {
+	//给构造函数上赋予属性
+	this.colors = ["red", "blue", "green"];
+	}
+	function SubType() {
+	//  继承 SuperType
+	//与上式不同，上式是继承原型方法，该式是继承构造函数
+	//SuperType.call(this);//可以使用这两种方法
+	SuperType.apply(this);
+	}
+	let instance1 = new SubType();
+	instance1.colors.push("black");//更改构造函数属性的值
+	console.log(instance1.colors); // "red,blue,green,black"
+	let instance2 = new SubType();
+	console.log(instance2.colors);//red,blue,green，这个没有改变
+
+	//可以向父类构造函数中传参
+	function SuperTypes(color) {
+	this.color = color;
+	}
+	function SubTypes(){
+		//call和apply的区别
+		//第一个参数都是this指向的对象
+		//call的后续的参数可以是任何类型
+		//apply最多只能有两个参数，第二个参数是数组形式
+		//SuperTypes.call(this,"red")
+		SuperTypes.apply(this,["red"]);
+	}
+	let ins=new SubTypes();
+	console.log(ins.color);
+
+	//盗用构造函数的问题
+	//必须在构造函数中定义方法，函数不能重用，子类也不能访问父类原型上定义的方法
+
+
+	//组合继承
+
 
 
 	
