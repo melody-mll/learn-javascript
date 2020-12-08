@@ -103,9 +103,52 @@
 
 	//盗用构造函数的问题
 	//必须在构造函数中定义方法，函数不能重用，子类也不能访问父类原型上定义的方法
-
+	
 
 	//组合继承
+	//组合继承组合了原型链和盗用构造函数，结合两者的优点
+	function SupersType(name){
+		this.name=name;
+		this.color=["red","green","blue"];
+	}
+	SupersType.prototype.sayname=function(){
+		console.log(this.name);
+		this.time=['1','2','3'];
+	}
+	function SupsType(name,age){
+		SupersType.call(this,name),
+		//组合继承，此时SupsType组合了SupersType的原型链和构造函数
+		//也就是包含this.name,this.color,this.sayname()
+		this.age=age
+	}
+	SupsType.prototype=new SupersType();
+	let instances1=new SupsType('aaa',11);
+	console.log(instances1);
+	instances1.color.push("black");
+	console.log(instances1.color);
+	instances1.sayname();
+	console.log(instances1.age);
+	instances1.time.push('44');
+	console.log(instances1.time);//[1,2,3,44]
+
+	let instances2=new SupsType('bbb',22);
+	console.log(instances2);
+	console.log(instances2.color);
+	instances2.sayname();
+	console.log(instances2.age);
+	console.log(instances2.time);//[1,2,3],instances1更改原型上的值，instances2上的值不会变化
+
+	//instanceof操作符用于检测构造函数的prototype属性是否出现在某个实例对象的原型链上
+	console.log(instances1 instanceof Object);//true
+	console.log(instances1 instanceof SupersType);//true
+
+	//isPrototypeOf()方法用于测试一个对象是否存在于另一个对象的原型链上。
+	console.log(Object.prototype.isPrototypeOf(instances1));//true
+
+	//原型式继承
+
+
+	
 
 
 
