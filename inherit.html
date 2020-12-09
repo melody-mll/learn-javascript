@@ -146,6 +146,64 @@
 	console.log(Object.prototype.isPrototypeOf(instances1));//true
 
 	//原型式继承
+	function objects(o){
+		function F(){}
+		F.prototype=o;//通过原型实现对象上的信息共享
+		return new F();
+	}
+	let perobj={
+		name:'mll',
+		color:["red","yellow","blue"]
+	}
+	let perobj1=new objects(perobj);
+	perobj1.color.push("white");
+	let perobj2=new objects(perobj);
+	perobj2.color.push("black");
+	console.log(perobj2.color);//["red","yellow","blue","white","black"];
+	console.log(perobj);//
+
+
+	//Object.create()
+	//接受两个参数，作为新对象原型的对象，以及给新对象定义额外属性的对象（第二个可选）
+	//在只有一个参数时，Object.create() 与这里的 object() 方法效果相同
+	//只有一个参数
+	let percre={
+		name:'mll',
+		color:["red","blue"]
+	}
+	//let percre1=Object.create(percre);
+	let percre1=Object(percre);//只有一个参数，与上式等同
+	percre1.color.push("yellow");
+	let percre2=Object.create(percre);
+	percre2.color.push("black");
+	console.log(percre);
+	//第二个参数，表示新增的属性
+	let percre3=Object.create(percre,{
+		name:{
+			value:'xiaowang'
+		}
+	});
+	console.log(percre3);//新定义的属性会遮蔽之前的属性，之前的属性会在原型上，color和name
+	console.log(percre);
+
+	//寄生式继承
+	function objecta(obj){
+		let clone=Object.create(obj);//通过这种方式构建一个新对象，新对象就是函数的参数对象
+		clone.sayhi=function(){
+			console.log("say hi")//给新对象赋予新的属性
+		}
+		return clone;
+	}
+	let obje={
+		name:'mll',
+		age:22
+	}
+	let objecta1=new objecta(obje);
+	objecta1.sayhi();
+
+	//寄生式组合继承
+	
+	
 
 
 	
