@@ -202,6 +202,41 @@
 	objecta1.sayhi();
 
 	//寄生式组合继承
+	function SuperaType(name){
+		this.name=name;
+		this.color=["red","blue","black"];
+	}
+	SuperaType.prototype.sayname=function(){
+		console.log(this.name);
+	}
+	function SupaType(name,age){
+		SuperaType.call(this,name);//第二次调用SuperaType()
+		//SuperaType的构造函数在为SupaType创建新实例时执行
+		//this指的是SupaType
+		this.age=age;
+	}
+	SupaType.prototype=new SuperaType();//第一次调用SuperaType()
+	//name和color都是SuperaType()上的实例属性,是SupaType上的
+	let instancea1=new SupaType('mll',22);
+	console.log(instancea1);
+	//实例属性有age:22,color:["red","blue","black"],name:"mll"
+	//因为创建实例时，调用了SuperaType上的构造函数，并且传入参数name，得到实例属性的值
+	//SupaType的原型属性是通过new SuperaType()来得到，上面有name:undefiend,color:["red","blue","black"]
+	//原型链上还有属性sayname();
+
+	//寄生式组合继承模式
+
+	function object(o) {
+		function F() {}
+		F.prototype = o;
+		return new F();
+	}
+	function inheritPrototype(subType, superType) {
+	let prototype = object(superType.prototype); // 创建对象
+	prototype.constructor = subType; // 增强对象
+	subType.prototype = prototype; // 赋值对象
+	}
+
 	
 	
 
