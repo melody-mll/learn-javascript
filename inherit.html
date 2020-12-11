@@ -231,11 +231,33 @@
 		F.prototype = o;
 		return new F();
 	}
+	//接受两个参数，子类构造函数，和父类构造函数
 	function inheritPrototype(subType, superType) {
+	//第一步创建父类原型的一个副本
 	let prototype = object(superType.prototype); // 创建对象
+	//解决由于重写原型导致constructor丢失
 	prototype.constructor = subType; // 增强对象
 	subType.prototype = prototype; // 赋值对象
 	}
+	function SuperbType(name){
+		this.name=name,
+		this.color=["red","yellow","blue"]
+	}
+	SuperbType.prototype=function(){
+		console.log(this.name);
+	}
+	function SubbType(name,age){
+		//call()方法使用一个给定的this值以及一个或多个参数来调用函数
+		SuperbType.call(this,name),
+		this.age=age
+	}
+	inheritPrototype(SubbType,SuperbType);
+	SubbType.prototype.sayAge = function() { 
+		console.log(this.age); 
+		};
+	let inss=new SubbType("www",12);
+	inss.sayAge();
+	console.log(inss);
 
 	
 	
