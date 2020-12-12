@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class</title>
+</head>
+<body>
+    <div>class</div>
+    <script>
+        //类定义
+        //类声明和类表达式
+        //类声明
+        class Animal{
+        }
+        //类表达式
+        const animal=class{           
+        }
+        //类表达式在被求值前也不能被引用，函数声明可以提升，但是类声明不能提升
+        console.log(FunctionExpression);//此时函数被声明，但是没有在之前引用，所以值是undefinend
+        var FunctionExpression=function (){};//如果不加var 第一句就会报错，ReferenceError，报undefinend
+        console.log(FunctionExpression);//此时已经被引用，会打印出函数 function(){}
+
+        console.log(FunctionDeclaration); // FunctionDeclaration() {} 变量提升，此时也能打印出函数
+        function FunctionDeclaration() {} 
+        console.log(FunctionDeclaration);//FunctionDeclaration() {}
+
+        console.log(ClassExpression);//undefinend 道理等同于函数表达式
+        var ClassExpression=class{};
+        console.log(ClassExpression);//class{}
+
+        //console.log(ClassDeclaration);//这里与函数有区别 没有变量提升 这里会报错， ReferenceError
+        class ClassDeclaration{};
+        console.log(ClassDeclaration);//class ClassDeclaration{} 这里类已经定义 可以打印出来类
+
+
+        //函数受函数作用域限制，类受块级作用域限制
+        {
+            function Add(){};
+            class Adds{};
+        }
+        console.log(Add);//ƒ Add(){}函数受函数作用域限制，会被打印出来
+        //console.log(Adds);//类受块级作用域限制，undefinend会报错
+
+        //类的构成
+        //一般情况下，类的命名要求首字母大写
+        //类可以包含构造函数方法、实例方法、获取函数、设置函数和静态类方法，但并不是必须的
+        class Bar { 
+            constructor() {} 
+            }
+        console.log(Bar);
+
+        //类构造函数
+        //constructor关键字在于在定义类的内部时，给他创建一个构造函数，在使用new操作符创建新实例时，应该调用该函数
+        //构造函数的定义不是必须的，当没有定义时，相当于将构造函数定义为空函数
+
+        //实例化
+
+        
+
+    </script>  
+</body>
+</html>
