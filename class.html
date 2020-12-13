@@ -56,6 +56,67 @@
 
         //实例化
 
+        //使用new操作符实例化类的时候，在内存中创建一个新对象，这个新对象的this指向被赋值为构造函数的prototype属性
+        //构造函数内部的this被赋值为这个新对象，然后执行构造函数内部的代码
+        //如果构造函数返回非空对象，则返回其对象，否则返回刚创建的新对象
+        class Animals {} //定义一个空类，内部没有构造函数
+        class Person { 
+            constructor() { 
+            console.log('person ctor'); //构造函数会打印出来
+            } 
+        } 
+        class Vegetable { 
+            constructor() { 
+            this.color = 'orange'; 
+            } 
+        } 
+        let a = new Animals(); //在实例化的时候，执行其构造函数，其构造函数是一个空函数，无返回
+        let p = new Person(); // person ctor  在实例化的时候会调用该构造函数，构造函数内部用了console.log,所以实例化后会被打印出来
+        let v = new Vegetable(); //调用其构造函数，构造函数的this指向就是实例化的v，所以v上就有了color属性，调用后会得到该值
+        console.log(v.color); // orange
+
+        //类实例化时传入的参数，会当作构造函数的参数
+        class Persons{
+            constructor(name){
+                console.log(arguments.length);//arguments是一个对应于传递给函数的参数的类数组对象
+                this.name=name||null
+            }
+        }
+        let p1=new Persons();//0 未传入参数
+        console.log(p1.name);//null
+        let p2=new Persons('mll');//1 传入一个参数，得到参数的argument.length=1
+        console.log(p2.name);//得到构造函数的name属性
+        let p3=new Persons('mll','xiaoming');//2
+        console.log(p3.name);//mll
+
+        //一般情况下，类构造函数会在执行之后返回This对象，构造函数返回的独享会被用做实例化的对象
+        //如果返回的不是this对象，而是其他对象，那么这个对象不会通过Instanceof操作符检测出跟类有关联
+        class Thisnew{
+            constructor(name){
+                this.age=12;
+                if(name){
+                    return {
+                        color:'red'
+                    }
+                }
+            }
+        }
+        let thisnew1=new Thisnew();
+        console.log(thisnew1);//
+        console.log(thisnew1 instanceof Thisnew);//true
+
+        let thisnew2=new Thisnew('mll');
+        console.log(thisnew2);//返回的对象上的实例属性上只有color
+        console.log(thisnew2 instanceof Thisnew);//false
+
+        //对于类构造函数，调用时必须使用new操作符，类构造函数实例化之后，会成为普通的实例方法。实例化之后可以在实例上引用。普通构造函数如果不使用new调用，会以全局的this作为内部对象
+
+        //把类当作特殊函数
+        //类可以像函数一样可以在任何地方定义，可以在数组中
+
+
+
+
         
 
     </script>  
