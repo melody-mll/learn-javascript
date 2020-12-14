@@ -113,7 +113,39 @@
 
         //把类当作特殊函数
         //类可以像函数一样可以在任何地方定义，可以在数组中
+        let  classList = [
+            class {
+                constructor(id){
+                    this.id=id;
+                    console.log(`instance ${id}`)
+                }
+            }
+        ]
+        function funclist(clas,id){
+            return new clas(id);
 
+        }
+        let newinstance=funclist(classList[0],1314);//instance 1314
+
+        //类也可以实现立即实例化
+        let ins=new class Instan{
+            constructor(id){
+                console.log(id)//mll
+            }
+        }('mll')
+        console.log(ins);
+
+
+
+        //类标识符有一个prototype属性，原型上有一个constructor属性指向类本身
+        class As{};
+        console.log(As.prototype.constructor==As);//true
+        //可以用instanceof检查构造函数原型是否在实例原型上
+        let ass=new As();
+        console.log(ass instanceof As);//true
+        console.log(ass instanceof As.constructor);//false
+
+        //实例，原型，类成员
 
 
 
