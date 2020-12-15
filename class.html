@@ -146,6 +146,70 @@
         console.log(ass instanceof As.constructor);//false
 
         //实例，原型，类成员
+        //每个实例上都有一个对应的成员对象，所有成员在原型属性上都不会共享
+        class Per{
+            constructor(){
+                this.name='mll';
+                this.sayname=()=>{console.log(this.name)};               
+            }
+        }
+        let per1=new Per();
+        let per2=new Per();
+        per1.sayname();
+        per2.sayname();
+        console.log(p1.name==p2.name);//false 每个实例上都有唯一的对象属性，每个实例上都不相同
+
+        //原型方法与访问器
+        //为了在实例间共享方法，类定义语法把在类块中定义的方法作为原型方法
+        class Index{
+            constructor(){
+                this.local=()=>{console.log('local')}//在构造函数上添加属性，this指向是Index,实例化后指向实例对象
+            }
+            local(){console.log('prototype local')};//在类块中定义方法，此时作为原型方法
+        }
+        let insta=new Index();
+        insta.local();//local 此时调用的是构造函数上的方法
+        Index.prototype.local();//在类块中定义的方法，可以通过调用上面的prototype来得到方法
+
+        //可以给类添加构造函数和方法，但是不能直接给类添加原始属性和对象
+        class List{
+            //name:'mll'//报错
+            // {
+            //     name:'mll',//报错
+            // }
+        }
+
+        //类方法等同于对象属性，因此可以使用字符串、符号或计算的值作为键
+        var aa=Symbol('mll');
+        class Sym{
+            a(){
+                console.log('a');
+            }
+            [aa](){
+                console.log('hahahah');
+            }
+            ['aaa'](){
+                console.log('aaaa');
+            }
+        }
+        let sym=new Sym();
+        sym.a();//a
+        sym[aa]();//hahahha
+        sym.aaa();//aaaa 这种方法类似于第一种方式，相同的方式调用
+
+        //类定义也支持获取和设置访问器。语法与行为跟普通对象一样
+        class Set{
+            set name(newname){
+                this.name_=newname;
+            }
+            get name(){
+                return this.name_;
+            }
+        }
+        let set1=new Set();
+        set1.name='mll';
+        console.log(set1.name);//mll
+
 
 
 
