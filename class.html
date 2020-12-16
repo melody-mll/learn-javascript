@@ -210,6 +210,102 @@
         set1.name='mll';
         console.log(set1.name);//mll
 
+        //静态类方法
+        //与原型成员类似，静态成员每个类上只能有一个
+        class Static{
+            constructor(){
+                this.local=()=>{console.log('local',this)}
+            }
+            local(){console.log('prototype',this)}//定义在类的原型上
+            static local(){console.log('static local',this)}//定义在类本身上
+        }
+        let staticins=new Static();
+        staticins.local();
+        Static.prototype.local();
+        Static.local();
+
+        //虽然类定义并不显式支持在原型或类上添加成员数据，但在类定义外部，可以手动添加
+        class Inside{
+            sayName(){
+                console.log(`${Inside.name} ${this.age}`)
+            }
+        }
+        Inside.name='mllaaa';
+        Inside.prototype.age='12';
+        
+        let pa=new Inside();
+        pa.sayName();
+
+        class Personas {
+            sayName() {
+            console.log(`${Personas.greeting} ${this.name}`);
+            }
+        }
+       
+        //  在类上定义数据成员
+        Personas.greeting = 'My name is';
+        Personas.prototype.name = 'Jake';
+        let p11 = new Personas();
+        p11.sayName(); // My name is Jake
+
+        //迭代器与生成器方法
+        //类定义语法支持在原型和类本身上定义生成器方法
+        class Personaaa {
+        // 在原型上定义生成器方法
+        *createNicknameIterator() {
+        yield 'Jack';
+        yield 'Jake';
+        yield 'J-Dog';
+        }
+        // 在类上定义生成器方法
+        static *createJobIterator() {
+        yield 'Butcher';
+        yield 'Baker';
+        yield 'Candlestick maker';
+        }
+        }
+
+        //添加默认迭代器，把类实例变成可迭代对象
+        class Mo{
+            constructor(){
+                this.name=['aa','bb','cc']
+            }
+            *[Symbol.iterator](){
+                yield *this.name.entries();
+            }
+        }
+        let moins=new Mo();
+        for(let [id,name] of moins){
+            console.log(name);
+        }
+
+
+        //继承
+        //es6支持单继承，使用extends关键字
+        class Vehicle {}
+        // 继承类 Bus类继承类Vehicle
+        class Bus extends Vehicle {}
+        let b = new Bus();//构建实例
+        console.log(b instanceof Bus); // true
+        console.log(b instanceof Vehicle);//true
+
+        class Aab{
+            ida(id){
+                console.log(id,this)
+            }
+            static idb(i){
+                console.log(i,this)
+            }
+        }
+        class Aac extends Aab{};
+        let xa=new Aab();
+        let xb=new Aac();
+        xa.ida('aaa');//aaa Aab{}
+        xb.ida('bbb');//bb Aac{}
+        Aab.idb('ccc');
+        Aac.idb('ddd');
+
+
 
 
 
