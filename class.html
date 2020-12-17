@@ -305,6 +305,42 @@
         Aab.idb('ccc');
         Aac.idb('ddd');
 
+        class Vehicless {
+            static identify() {
+            console.log('vehicle');
+            }
+        }
+        class Buss extends Vehicless {
+            static identify() {
+            super.identify();//在静态方法中可以通过 super 调用继承的类上定义的静态方法
+            }
+        }
+        Buss.identify(); // vehicle
+        //使用super时的注意事项
+        //只能在派生类构造函数和静态方法中使用
+        //在类构造函数中，不能在super之前使用this
+        //不能单独使用super关键字，要用它调用构造函数，或是引用静态方法，
+        // class SSuper{}
+        // class SSSuper extends SSuper{
+        //     constructor(){
+        //         console.log(super);//会报错
+        //     }
+        // }
+
+        class Vehiclee {}
+        class Car extends Vehiclee {}
+        //如果在派生类中定义了构造函数，则必须调用super()或是必须有返回一个对象
+        class Buse extends Vehiclee {
+            constructor() {
+            super();
+            }
+        }
+        class Vane extends Vehiclee {
+            constructor() {
+            return {};
+            }
+        }
+
 
 
 
