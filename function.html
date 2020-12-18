@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function</title>
+</head>
+<body>
+    <div>function</div>
+    <script>
+        //函数
+        //1.函数声明的方式定义
+        function sum1(x,y){
+            return x+y;
+        }
+        console.log(sum1(1,2))
+        //2.函数表达式的方式定义，这两种方式几乎是等价的
+        let sum2=function(x,y){
+            return x+y;
+        };
+        console.log(sum2(3,4))
+        //或是箭头函数的表达形式
+        let sum3=(x,y)=>{
+            return x+y;
+        }
+        console.log(sum3(2,3));
+
+        //箭头函数
+        //箭头函数实例化的函数对象与正式的函数表达式创建的函数对象行为是相同的
+        let add1=function(x,y){
+            return x+y;
+        }
+        let add2=(x,y)=>{return x+y}//这两种方式是等价的
+        //箭头函数适用于嵌入函数的场景
+        let arr1=[1,2,3];
+        let maps=arr1.map((x)=>{return x*2});
+        console.log(maps);
+        //当箭头函数只有一个参数时，可以不用括号，当没有参数或是多个参数时才需要括号
+        //箭头函数后面只有一条语句时，可以不使用大括号，当有多个语句时，需要大括号
+        let t1=(x,y)=>{return x+y};
+        let t2=(x,y)=>x+y;//这种方式只适用于箭头函数后只有一个语句
+        let t3=(x,y)=>{x+y};//这种方式没有返回值，得到的值是undefined;
+        //let t4=(x,y)=>return x+y;//这种方式是无效的写法
+        console.log(t1(1,1));
+        console.log(t2(1,2));
+        console.log(t3(3,3));
+
+        //箭头函数不能使用super,arguments,new.target,不能用作构造函数，箭头函数也没有Prototype属性
+
+        //函数名就是指向函数的指针，一个函数可以有多个名称
+        function name1(x,y){
+            return x+y;
+        }
+        let name2=name1;//把name1赋值给name2;此时这两个都指向这个函数；
+        console.log(name1(1,1));
+        console.log(name2(2,2));
+
+        //理解参数
+        //对于函数声明时声明的函数参数个数，在函数调用时并不是一定需要传入等于声明参数的个数
+        //可以少于，多于，甚至是没有，编译器都不会报错
+        //函数内部有一个arguments是一个类数组对象，会取得传入的参数，arguments.length,arguments[i]来取值
+        function argu(x,y,z){
+            console.log(arguments.length);//5,表示调用函数时传入的参数个数
+            console.log(arguments[2]);//4 表示传入的第三个参数
+        }
+        argu(1,3,4,5,6);
+
+        //在函数内部，参数并不一定要使用
+        function argum(x,y){
+            return arguments[0]+arguments[1];//可以通过arguments数组的形式读取参数。
+        }
+        console.log(argum(9,8));
+
+        //arguments对象可以与函数参数一起使用
+        function argume(x,y){
+            if(arguments.length==1){
+                console.log("111"+x);
+            }
+            if(arguments.length==2){
+                console.log("222"+y)
+            }
+        }
+        argume(3);
+        argume(3,4);
+
+        function doAdd(num1, num2) {
+            arguments[1] = 10;//将第二个参数赋值为10
+            console.log(arguments[0] + num2);
+        }
+        doAdd(1);//NaN，num2为undefined,进行加法运算后为NaN;
+        doAdd(1,1);//11
+        
+        
+    </script>
+</body>
+</html>
