@@ -89,6 +89,66 @@
         }
         doAdd(1);//NaN，num2为undefined,进行加法运算后为NaN;
         doAdd(1,1);//11
+
+
+        //箭头函数中的参数
+        //如果函数是用箭头函数定义的，则内部不能使用arguments关键字访问
+
+        //没有重载
+        //如果定义两个同名函数，则后定义的会覆盖前面定义的，
+
+        //默认参数值
+        //显式定义默认参数
+        function names(name='mll'){
+            return ki=` hello ${name}`
+        }
+        console.log(names());//hello mll 没有传入参数时，将默认参数当作变量
+        console.log(names('xiaoming'));//hello xiaoming 有参数传入，则使用该参数
+
+        //给参数传undefinend 等于没有传参数
+        console.log(names(undefined));//hello mll
+        //在使用默认参数时，arguments 对象的值不反映参数的默认值，只反映传给函数的参数
+        function namea(name='mll'){
+           return na=`good morning ${arguments[0]}`
+        }
+        console.log(namea('iii'));//good morning iii
+        console.log(namea());//good morning undefinend arguments对象不能反映默认值。
+
+        function makeKing(name = 'Henry', numerals = name) { //这里对numerals进行赋值
+            return `King ${name} ${numerals}`; 
+        } 
+        console.log(makeKing()); // King Henry Henry
+
+        //参数初始化顺序遵循“暂时性死区”规则，即前面定义的参数不能引用后面定义的
+        // function makeKing(name = numerals, numerals = 'VIII') { //这里会报错，numerals没有被赋值，就直接引用，会报引用错误。
+        //     return `King ${name} ${numerals}`; 
+        // }
+
+        //参数也存在于自己的作用域中，它们不能引用函数体的作用域
+        // function makeKing(name = 'Henry', numerals = num) { //这里会报错，num is undefinend
+        //     let num = 'VIII'; //参数不能引用函数体内的变量
+        //     return `King ${name} ${numerals}`; 
+        // }
+        // console.log(makeKing('11','12'))
+        
+        //参数扩展与收集
+        //在给函数传参时，有时候可能不需要传一个数组，而是要分别传入数组的元素
+        let value=[9,8,7];
+        function sum(){
+            let sumnumber=0;
+            for (let i=0;i<arguments.length;i++){
+                sumnumber=sumnumber+arguments[i];
+            }
+            return sumnumber;
+        }
+        console.log(sum(4,3,5,2));//14
+        console.log(sum.apply(null,value));//24
+
+        //apply()方法
+        //func.apply(thisArg, [argsArray])
+        //thisArg this呼叫所提供的值，在非严格模式下，null和undefined
+        //argsArray 这些参数可以是类似于数组的通用对象，而不是数组。
+
         
         
     </script>
