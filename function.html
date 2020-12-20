@@ -143,11 +143,71 @@
         }
         console.log(sum(4,3,5,2));//14
         console.log(sum.apply(null,value));//24
+        //可以通过扩展运算符的方式来传递参数
+        console.log(sum(...value));//24
+        //可以在扩展运算符前面或者后面传递其他的参数
+        console.log(sum(1,2,...value));//27
+        //对于arguments对象来说，它并不知道扩展运算符的存在，他接受的参数就是传入的参数个数
+        //比如sum(1,2,...value),aarguments.length=5
 
         //apply()方法
         //func.apply(thisArg, [argsArray])
         //thisArg this呼叫所提供的值，在非严格模式下，null和undefined
         //argsArray 这些参数可以是类似于数组的通用对象，而不是数组。
+
+        //在普通函数和箭头函数中，也可以将扩展操作符用于命名参数
+        function  add3(a,b,c=0){
+            return a+b+c;
+        }
+        console.log(add3(...[1,2,4]));//7
+        let add4=(x,y,z=2)=>{
+            return x*y*z;
+        }
+        console.log(add4(...[1,2,4,5]));//8
+
+        //收集函数
+        function getSum (...values){//其中...values表示传入的所有参数
+            return values.reduce((x,y)=>x+y,1);//reduce方法是对数组上的每个元素执行getSum方法
+        }//其中1表示的是初始值总和为1
+        console.log(getSum(1,2,3));//7
+
+        //收集参数的前面如果还有命名参数，则只会收集其余的参数
+        //收集参数只能把它作为最后一个参数
+
+        //function getProduct(...values, lastValue) {}//这样会报错，扩展运算符传参只能作为最后一个参数
+
+        //此时first表示的是传入的第一个参数，...values表示的是剩余的参数
+        function getProducts(first,...values){
+            console.log(`arguments.length   ${arguments.length}`);//使用收集参数并不影响 arguments 对象，它仍然反映调用时传给函数的参数
+            return values;
+        }
+        console.log(getProducts(1,2,3));//[2,3]
+        //箭头函数虽然不支持 arguments 对象，但支持收集参数的定义方式
+        let getProductss=(first,...values)=>{//箭头函数没有arguments对象
+            return values;
+        }
+        console.log(getProductss(9,0,8,7));//[0,8,7],与常规定义的方式相同。
+
+
+
+        //函数声明与函数表达式
+        //对于函数声明，js在代码执行之前，会先读取函数声明，并在执行上下文中生成函数定义
+        //而对于函数表达式，则必须等到代码执行到他那一行，才会在执行上下文中生成函数定义。
+        console.log(sums1(1,2));//3 这里可以正常执行
+        function sums1(x,y){
+            return x+y;
+        }
+        //除了函数什么时候有定义之外，这两种函数声明方式几乎是等价的
+        console.log(sums2(2,3));//这里运行会报错，表示sums1没有被定义就引用。
+        let sums2=function (x,y){//函数定义包含在一个变量初始化中
+            return x+y;
+        }
+
+
+        //函数作为值
+
+        
+        
 
         
         
