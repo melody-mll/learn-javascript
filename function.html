@@ -198,13 +198,80 @@
             return x+y;
         }
         //除了函数什么时候有定义之外，这两种函数声明方式几乎是等价的
-        console.log(sums2(2,3));//这里运行会报错，表示sums1没有被定义就引用。
-        let sums2=function (x,y){//函数定义包含在一个变量初始化中
-            return x+y;
-        }
+        // console.log(sums2(2,3));//这里运行会报错，表示sums1没有被定义就引用。
+        // let sums2=function (x,y){//函数定义包含在一个变量初始化中
+        //     return x+y;
+        // }
 
 
         //函数作为值
+        //函数名在es中就是变量，所以函数可以用在任何可以使用变量的地方，不仅可以在函数参数中传入函数
+        //也可以在函数体内部返回函数
+        function getnew(newFunc,ins){//这里传递的newFunc是函数，ins是普通形参
+            //如果是访问函数而不是调用函数，那就必须不带括号,传入的是newFunc，不能加括号
+            return newFunc(ins);//返回的也是一个函数形式
+        }
+        function newFunc(num){
+            return num+10;
+        }
+        let getnewFunc=getnew(newFunc,10);//等于返回的是newFunc(10)，返回的是10+10;
+        console.log(getnewFunc);//20
+
+        //函数内部
+        //arguments和this
+        //arguments表示传入函数的所有参数，只能是在function定义函数时有，箭头函数定义函数是没有arguments对象的。
+        // arguments 对象其实还有一个 callee 属性，是一个指向 arguments 对象所在函数的指针
+        //阶乘函数
+        function jie(arg){
+            if(arg<=1){
+                return 1;
+            }else{
+                //return arg*jie(arg-1);
+                //等同于下式
+                return arg*arguments.callee(arg-1);//arguments.callee 就可以让函数逻辑与函数名解耦
+            }
+        }
+        let trues=jie;
+        jie=function(){
+            return 0;
+        }
+        console.log(trues(4));//24 因为使用arguments.callee,还会调用之前的jie函数
+        console.log(jie(4));//0 
+
+        //this
+        //this 引用的是把函数当成方法调用的上下文对象,是指向调用函数的对象
+        window.color="red";
+        let ocolor={
+            color:"yellow"
+        }
+        function saycolor(){
+            console.log(this.color);//this指向的是函数的调用者，只有在函数被调用时才会生效。
+        }
+        // let saycolor=()=>{
+        //     console.log(this.color);
+        //     //当使用箭头函数定义函数时，//因为这个箭头函数是在window上下文定义的，this指向的都是windows,打印出来都是red,
+        // }
+        saycolor();//red 这个是在window下调用，this指向windows,所以打印出来是windows.color的值
+        ocolor.saycolor=saycolor;//给ocolor上定义saycolor属性，并且值是上面定义的函数
+        ocolor.saycolor();//yellow 当调用该属性函数时，This指向的是ocolor,他的saycolor属性值为yellow;
+
+        //箭头函数中的 this 会保留定义该函数时的上下文
+        function King(){
+            this.name='King';
+            setTimeout(() => console.log(this.name), 1000);
+        }       
+        function Queen() {
+            this.royaltyName = 'Elizabeth';
+            // this 引用 window 对象
+            setTimeout(function() { console.log(this.royaltyName); }, 1000);
+        }
+
+
+        new King();
+        new Queen();
+
+
+
 
         
         
