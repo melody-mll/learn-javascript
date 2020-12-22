@@ -254,22 +254,80 @@
         saycolor();//red 这个是在window下调用，this指向windows,所以打印出来是windows.color的值
         ocolor.saycolor=saycolor;//给ocolor上定义saycolor属性，并且值是上面定义的函数
         ocolor.saycolor();//yellow 当调用该属性函数时，This指向的是ocolor,他的saycolor属性值为yellow;
+        //函数名只是保存指针的变量，所以saycolor()和o.saycolor()调用的是同一个函数。
 
         //箭头函数中的 this 会保留定义该函数时的上下文
         function King(){
             this.name='King';
             setTimeout(() => console.log(this.name), 1000);
         }       
+        // function Queen(){
+        //     this.names='Queen';
+        //     setTimeout(function (){console.log(this.names);},1000);
+        // }
         function Queen() {
             this.royaltyName = 'Elizabeth';
-            // this 引用 window 对象
+            // this 引用 window 对象,而windows下面没有royaltyName属性，所以打印出来是undefinend;
             setTimeout(function() { console.log(this.royaltyName); }, 1000);
         }
 
+        //箭头函数的this值表示定义该箭头函数的上下文，会进行保留
+        //普通函数的this表示调用该函数的实例
 
-        new King();
-        new Queen();
+        //new King();//King
+        //new Queen();//undefinend
 
+        //caller属性 这个属性引用的是调用当前函数的函数
+        function call(){
+            console.log(call.caller);
+        }
+        call();//null 在全局作用域中调用的则为 null
+
+
+        function calls(){
+            inner();
+        }
+        function inner(){
+            console.log(inner.caller);
+        }
+        calls();//这里打印出来的是calls(){inner();} 因为inner.caller指向的是调用函数的函数calls()
+
+
+        //new.target
+        //new.target表示该函数是否是用new关键字定义的，如果函数是正常调用的，则new.target的值为undefinend;
+        //如果是用new关键字调用的，则引用被调用的构造函数
+        function targe(){
+            if(!new.target){
+                throw 'not use new'//这里没有用new关键字定义，new.target为undefined,!new.target为true
+            }
+            else{
+                console.log("use new");//这里表示用的是new关键字定义，！new.target为false
+            }
+        }
+        new targe();//use new 
+        //targe();//这里会报出错误 not use new;
+
+
+        //函数属性和方法   length和prototype
+        function len(x,y,z){
+            return x+y;
+        }
+        function lens(x){
+            return x+1;
+        }
+        function lenss(){
+            return 12;
+        }
+        //其中length的属性表示传入的参数的个数
+        console.log(len.length);//3
+        console.log(lens.length);//1
+        console.log(lenss.length);//0
+
+        //prototype属性
+        //该属性保存引用类型上的所有实例方法，例如toString(),valueOf()方法，可以被所用实例共享，他是不可枚举类型，不能被for-in循环
+
+        //apply()和call()
+        
 
 
 
