@@ -327,7 +327,65 @@
         //该属性保存引用类型上的所有实例方法，例如toString(),valueOf()方法，可以被所用实例共享，他是不可枚举类型，不能被for-in循环
 
         //apply()和call()
+        function sum(num1,num2){
+            return num1+num2;
+        }
+        function getsum1(num1,num2){
+            console.log(this);//this是windows对象
+            return sum.apply(this,arguments);//getsum1会调用sum函数，将this作为函数体的this值，
+        }
+        function getsum2(num1,num2){
+            //return sum.apply(this,[num1,num2]);
+            return sum.apply(window,[num1,num2]);//等同于上式
+        }
+        console.log(getsum1(2,3));//5
+        console.log(getsum2(3,4));//7
+
+        window.color="red";
+        const o = {
+            color:"blue"
+        }
+        function saycolors(){
+            console.log(this.color)
+        }
+        saycolors();//red
+        //call控制函数调用上下文，即函数体内的this值
+        saycolors.call(this);//red
+        saycolors.call(window);//red
+        saycolors.call(o);//blue
+
+        //bind()方法
+        let newsaycolors=saycolors.bind(o);//bind方法会创建一个新的实例，其this值会被绑定到传给bind的对象
+        newsaycolors();//blue
+
+
+        //函数表达式
+        //函数表达式与函数声明的区别，函数表达式需要先声明再使用
+        //
+        let sayhi;
+        let condition=0;
+        if(condition){
+            sayhi=function(){
+                console.log("say ok")
+            }
+        }else{
+            sayhi=function(){
+                console.log("say no")
+            }
+        }
+        sayhi();
+
+        function newFun(num){
+            return function (num1,num2){//返回的是一个匿名函数
+                return num1+num2+num;
+            }
+        }
+        let newfuns=newFun(2);//可以用函数表达式的方式调用
+        console.log(newfuns(3,4));
+
+        //递归
         
+
 
 
 
