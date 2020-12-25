@@ -413,6 +413,7 @@
 
 
         //闭包
+        //闭包指的是那些引用了另一个函数作用域中变量的函数
         function createFunc(proper){
             return function(obj1,obj2){
                 let value1=obj1[proper];
@@ -436,7 +437,45 @@
                 }
         }
         let result=compare(2,3);
-        console.log(result)
+        console.log(result);
+
+        //this
+        window.identify="hello";
+        let object = {
+            identify : "object hello",
+            iden () {
+                return function () {//匿名函数的this值不会绑定到某个对象，则指向的是windows
+                    return this.identify;//this对象会在执行时绑定到执行函数的上下文             
+                }
+            }
+        }
+        console.log(object.iden()());//hello
+
+        //每个函数在调用时会创建两个变量，arguments,this
+        //内部函数不能直接访问外部函数的这两个变量
+        //可以把this绑定到另一个可以访问的变量中
+        window.identifys="beside";
+        let objects = {
+            identifys : "inner" ,
+            idens () {
+                let that = this;//对this值进行绑定
+                return function () {
+                    return that.identifys//此时的that表示iden函数的调用者                   
+                }
+            }
+        }   
+        console.log(objects.idens()());//inner
+
+        //this,arguments变量都是不能在函数内部使用的，如果要使用，需要先把变量保存
+        let innerr = {
+            che (num1,num2){
+                let argument=arguments;
+                return function () {
+                    return argument.length
+                }
+            }
+        }
+        console.log(innerr.che(1,2)());//0 
 
 
 
