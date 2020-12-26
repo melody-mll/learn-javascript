@@ -475,7 +475,62 @@
                 }
             }
         }
-        console.log(innerr.che(1,2)());//0 
+        console.log(innerr.che(1,2)());//当已经把arguments变量保存之后，则在匿名函数之中可以访问，如果变量没有保存则不可以访问，打印出来是0
+
+        //立即调用的函数表达式（立即调用的匿名函数）
+        (function (){
+
+        })()//表示立即调用的匿名函数
+        // (function (){//这里会抛出错误，表示不是一个函数
+        //     for(let i=0;i<=3;i++){
+        //         console.log(i);
+        //     }
+        // })();
+        // console.log(i);
+        for(let i=0;i<3;i++){
+            console.log(i);
+        }
+        //console.log(i);//在这里会报出错误，i is undefined
+
+        //私有变量
+        //js中没有私有成员的概念，所有对象属性都是公有的，但是有私有变量的概念
+        //私有变量，例如在块级作用域或者函数内部声明的参数或者函数，在外部是访问不到的
+        function sum(num1,num2){
+            sums=num1+num2;
+            return sums;//这三个变量都是私有变量，在函数外部不能访问
+        }
+
+        //特权方法的创建
+        function MyObject(){
+            //在函数内部定义的函数和变量在函数外部是不能访问的，但是在函数内部他自己是可以访问的
+            let privatenum=0;
+            function privateFunc(){
+                return 111;
+            }
+            //定义在函数内部的特权方法就是一个闭包形式，可以访问到函数内部定义的变量和方法，
+            this.publics=function(){
+                privatenum++;
+                return privateFunc();
+            }
+        }
+
+        function newobject(name){
+            this.getname=function(){
+                return name;
+            };
+            this.setname=function(value){
+                name=value;
+            }
+        }
+        let per1=new newobject("mll");
+        console.log(per1.getname());
+        per1.setname("hahah");
+        console.log(per1.getname());
+
+
+
+
+
 
 
 
