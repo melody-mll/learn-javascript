@@ -527,6 +527,23 @@
         per1.setname("hahah");
         console.log(per1.getname());
 
+        //模块模式
+        //模块模式是在单例对象基础上加以扩展，使其通过作用域链来关联私有变量和特权方法。
+        let single = function(){
+            let private=10;
+            function privateFuncs(){
+                return false;
+            }
+            //特权/公有方法和属性
+            return {
+                public:true,
+                publicMethod(){
+                    private++;
+                    return privateFuncs();
+                }
+            }
+        }
+
 
 
 
