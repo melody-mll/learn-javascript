@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异步编程</title>
+</head>
+<body>
+    <script>
+        //异步编程
+        //同步与异步
+        //简单的同步与异步
+        let x=2;
+        x=x+8;
+
+        let i=2;
+        setTimeout(()=>{return i=i+9,console.log(i)},2000);
+
+        function double(value) {
+        setTimeout(() => setTimeout(console.log, 0, value * 2), 1000);
+        }
+        double(3);
+
+        //异步返回值
+        //给异步操作提供一个回调，这个回调中包含要使用异步返回值的代码
+        function asyndouble(value,callback){
+            setTimeout(()=>callback(value),3000);
+        }
+        asyndouble(3,(value)=>{console.log(`the value is ${value*2}`)},3000);
+
+        //异步操作的成功失败处理
+        function suc(value,success,failure){
+            setTimeout(
+                ()=>{
+                    try{
+                    if(typeof value !=='number'){
+                        throw('must provide number type')
+                    }
+                    success(value);
+                }catch(e)
+                {
+                    failure(e);
+                }
+                }
+                ,1000)
+        }
+        let successcallback=function(value){
+            console.log(`the success value is ${value*2}` )
+        }
+        let failurecallback=function(value){
+            console.log(`the error is ${value}`)
+        }
+        suc(1,successcallback,failurecallback);// the success value is 2
+        suc('a',successcallback,failurecallback);// the error is must provide number type
+
+    </script>
+</body>
+</html>
