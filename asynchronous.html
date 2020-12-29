@@ -36,7 +36,7 @@
                     if(typeof value !=='number'){
                         throw('must provide number type')
                     }
-                    success(value);
+                    success(value*2);
                 }catch(e)
                 {
                     failure(e);
@@ -52,6 +52,35 @@
         }
         suc(1,successcallback,failurecallback);// the success value is 2
         suc('a',successcallback,failurecallback);// the error is must provide number type
+
+        const successcallbacks=(x)=>{
+            double(x,(y)=>{console.log(`success ${y}`)})           
+        }
+        suc(1,successcallbacks,failurecallback);
+
+        //期约
+        let p=new Promise(()=>{});
+        setTimeout(console.log,0,p);//Promise <pending>
+        //把一个期约实例传给控制台时，表示当前是pending状态，
+        //期约有三种状态，fulfiled,rejected状态，状态是不可逆的，而这两种状态则不可更改
+        let p1=new Promise((resolve,reject)=>resolve());
+        setTimeout(console.log,0,p1);//<fulfilled>
+        let p2=new Promise((resolve,reject)=>reject());
+        setTimeout(console.log,0,p2);//<rejected>
+
+        new Promise(()=>{setTimeout(console.log,0,"first")});
+        setTimeout(console.log,0,"second");
+        
+        let ps=new Promise((resolve,reject)=>setTimeout(reject,1000));
+        setTimeout(console.log,0,ps);//此时不会报出错误，因为setTimeout推迟了切换状态，此时ps的状态还没有改变
+        //只要resolve或者reject中一个被调用，则不会改变状态，
+        let p3=new Promise((resolve,reject)=>{
+            reject();
+            resolve();
+        })
+        setTimeout(console.log,0,p3)
+
+
 
     </script>
 </body>
