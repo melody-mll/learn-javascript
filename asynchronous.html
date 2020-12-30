@@ -68,6 +68,10 @@
         let p2=new Promise((resolve,reject)=>reject());
         setTimeout(console.log,0,p2);//<rejected>
 
+         //期约并非一开始处于pending状态
+         let p5=new Promise((resolve,reject)=>resolve());//此时处于fulfilled状态
+         let p6=Promise.resolve()//这两种方式是等同的   
+
         new Promise(()=>{setTimeout(console.log,0,"first")});
         setTimeout(console.log,0,"second");
         
@@ -80,7 +84,53 @@
         })
         setTimeout(console.log,0,p3)
 
+        //Promise.resolve() 可以说是一个幂等方法
+        let p7=new Promise(()=>{});
+        setTimeout(console.log,0,p7);
+        setTimeout(console.log,0,Promise.resolve(p7));
+        console.log(p7===Promise.resolve(p7));//true
 
+        let p8=new Promise((resolve,reject)=>reject(7));
+        setTimeout(console.log,0,p8);
+        p.then(null, (e) => setTimeout(console.log, 0, e));
+
+        //同步/异步执行的二元性
+        //错误抛出
+        try{
+            throw("error");
+        }catch(e){
+            console.log(e);//erroe抛出错误并且接受到错误
+        };
+        try{
+            Promise.reject(new Error("Error"));//抛出错误，但是没有接受到
+        }catch(e){
+            console.log(e);//uncaught (in promise) 
+        }
+
+
+        //期约的实例方法
+        //实现Thenable接口
+        //在这个异步结构中，任何对象都有一个then()方法，这个方法实现了Thenable接口
+        class Thenable{
+            then(){}
+        }
+        let then=new Thenable();
+        console.log(then);
+
+        //Promise.prototype.then()
+        //这个then()方法最多接受两个参数,onResolve处理程序,onReject处理程序,分别在期约进入“兑现”和“拒绝”时实行
+        function onResolves(id){
+            setTimeout(console.log,0,id,"onresolve");//s1 onresolve
+        }
+        function onReject(id){
+            setTimeout(console.log,0,id,"onreject");//s2 onreject
+        }
+        let s1=new Promise((resolve,reject)=>setTimeout(resolve,2000));
+        let s2=new Promise((resolve,reject)=>setTimeout(reject,2000));
+        s1.then(()=>onResolves("s1"),
+        ()=>onReject("s1"));//因为期约状态是互斥的，所以这两个函数只有一个会执行，/
+        s2.then(()=>onResolve("s1"),//如果不需要传两个参数，则可将不传的参数转为undefined
+        ()=>onReject("s2"));
 
     </script>
 </body>
