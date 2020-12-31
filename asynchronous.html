@@ -127,10 +127,42 @@
         }
         let s1=new Promise((resolve,reject)=>setTimeout(resolve,2000));
         let s2=new Promise((resolve,reject)=>setTimeout(reject,2000));
-        s1.then(()=>onResolves("s1"),
+        s1.then(()=>onResolve("s1"),
         ()=>onReject("s1"));//因为期约状态是互斥的，所以这两个函数只有一个会执行，/
         s2.then(()=>onResolve("s1"),//如果不需要传两个参数，则可将不传的参数转为undefined
         ()=>onReject("s2"));
+
+        //then后面接受的必须是函数类型，如果传的不是函数类型，则是undefined;
+        let t1=s1.then();
+        setTimeout(console.log,0,t1);
+        let t2=s1.then(()=>{});//这三种方式是一样的
+        let t3=s1.then(()=>undefined);
+        let t4=s1.then(()=>Promise.resolve());
+
+        //Promise.prototype.catch()
+        //给期约添加拒绝处理程序，等同于Promise.prototype.then(null,onRejected);
+        let sq=Promise.reject();
+        let onRejected=()=>{
+            setTimeout(console.log,4000,'reject');
+        }
+        //这两种方式处理拒绝程序是一样的
+        sq.then(null,onRejected);//reject
+        sq.catch(onRejected);//reject
+
+        //Promise.prototype.finally()
+        //用于给期约添加 onFinally 处理程序
+        let fi1=Promise.resolve();
+        let fi2=Promise.reject();
+        let onFinally=function(){
+            setTimeout(console.log,0,'finally');
+        }
+        fi1.finally(onFinally);//finally 当事件是拒绝还是解决状态的时候都会执行
+        fi2.finally(onFinally);//finally
+
+        //非重入期约方法
+        let ch=Promise.resolve();
+        ch.then(()=>setTimeout(console.log,0,'resolve'));
+        setTimeout(console.log,0,'Promise resolve');// 同步输出 这个会先执行
 
     </script>
 </body>
