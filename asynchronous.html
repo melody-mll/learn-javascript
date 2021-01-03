@@ -230,7 +230,60 @@
             })
             tcf.catch(()=>{console.log('second catch')})
             .then(()=>{console.log('third then')})
-            .finally(()=>{console.log('forth finally')})
+            .finally(()=>{console.log('forth finally')})//按照顺序依次打印，都是期约函数
+
+            //期约图
+            //Promise.all(),Promise.race()
+            //将多个期约实例组合成一个期约的静态方法
+            //函数合成
+            function addone(x){
+                return x+1;
+            }
+            function addtwo(x){
+                return x+2;
+            }
+            function addthree(x){
+                return x+3;
+            }
+            console.log(addone(addtwo(addthree(100))));
+            //期约合成
+            function addsix(x){
+                return Promise.resolve(x)
+                .then(addone)
+                .then(addtwo)
+                .then(addthree);
+            }
+           // setTimeout(console.log,0,addsix(200));
+           addsix(200).then(console.log);
+
+           //期约扩展
+           //期约取消
+           class CancelToken { 
+            constructor(cancelFn) { 
+            this.promise = new Promise((resolve, reject) => { //类内部包装了一个期约
+            cancelFn(resolve); //将解决办法暴露给cancelFn()函数，则通过该函数的调用可以控制期约的状态
+            }); 
+            } 
+            }
+
+
+
+            //异步函数
+            //也被称为async/await （语法关键字）
+            //让已同步方式写的代码可以异步执行
+            let asy=new Promise((resolve,reject)=>{setTimeout(resolve,1000,3)});//这个期约会在超时之后resolve解决为一个值
+            asy.then((x)=>{console.log(x)});//这个3会在1秒后打印出来，要是想要使用这个数据，则必须在写一个事件处理程序，进行处理。
+
+            //es6对函数进行了扩展，为其增加了async,await关键字
+            //async关键字用于声明异步函数
+            async function asyFc(){}//异步声明函数
+            //async关键字可以用于函数声明，函数表达式，箭头函数和方法上
+
+            async function asyfo() { 
+            console.log(1); 
+            } 
+            asyfo(); //虽然函数是异步函数，但是还是同步执行的，这段代码执行后才执行的后面的代码
+            console.log(2);//1 2
 
 
     </script>
