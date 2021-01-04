@@ -285,6 +285,73 @@
             asyfo(); //虽然函数是异步函数，但是还是同步执行的，这段代码执行后才执行的后面的代码
             console.log(2);//1 2
 
+            async function newasy(){
+                console.log(1);
+                return 3;//async通过return 关键字，可以将返回的值包装成Promise对象
+                //return Promise.resolve(3);也可以直接返回一个期约对象
+            }
+            newasy().then(console.log);//给返回的期约添加一个事件处理程序
+            console.log(2);//1 2 3
+
+            async function neasy(){
+                console.log(1);
+                throw 3;
+                Promise.reject(3)
+            }
+            neasy().catch(console.log);//抛出的错误会被捕捉到，添加事件处理程序，返回错误的对象
+            neasy().catch(console.log);//被拒绝的期约不会被捕捉到，uncaught
+            console.log(2)//1 2 3
+
+            //await
+            //使用await关键字可以暂停异步代码的执行，等待期约执行
+
+            let awi=new Promise((resolve,reject)=>{setTimeout(resolve,1000,3)});
+            awi.then((x)=>{console.log(x)});
+
+            async function awiFunc(){
+                let awis=new Promise((resolve,reject)=>{setTimeout(resolve,1000,3)});
+                console.log(await awis);
+            }
+            awiFunc();
+
+            async function newawi(){
+                console.log(await Promise.resolve('newawi func'));
+            }
+            newawi();//newawi func 异步处理
+
+            async function newawis(){
+                return await Promise.resolve('new funcs');
+            }
+            newawis().then(console.log);//new funcs
+
+            //之前对于reject的promise对象不会捕捉到，但是使用await关键字则会捕捉到
+            async function reje(){
+                console.log(1);
+                await Promise.reject(3);
+            }
+            reje().catch(console.log);//事件拒绝处理函数
+            console.log(2);//1 2 3 异步处理
+
+            //错误的捕捉
+            async function rejes(){
+                console.log(1);
+                await (()=>{throw 3})()
+            }
+            rejes().catch(console.log);//事件处理程序
+            console.log(2);//1 2 3 异步处理
+
+
+            //await的限制
+            //await 关键字必须在异步函数中使用
+            //立即调用异步函数
+            (async function(){
+                console.log(await Promise.resolve(3));
+            })();
+            //await关键字只能在异步函数中使用，在同步中使用会报错
+
+
+            //停止和恢复执行
+
 
     </script>
 </body>
