@@ -351,6 +351,17 @@
 
 
             //停止和恢复执行
+            //异步函数的执行主要看await关键字，如果没有await关键字其实与普通的函数没有什么区别
+            async function awai(){
+                console.log(2);
+                await null;
+                console.log(4);
+            }
+            console.log(1);
+            awai();
+            console.log(3);//1 2 3 4 await关键字后面的部分会异步执行
+
+            //异步函数策略
 
 
     </script>
