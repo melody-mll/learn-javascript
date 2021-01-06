@@ -362,6 +362,51 @@
             console.log(3);//1 2 3 4 await关键字后面的部分会异步执行
 
             //异步函数策略
+            //实现sleep()
+            async function sleeps(delay){
+                return new Promise((resolve)=>setTimeout(resolve,delay));
+            }
+            console.log(sleeps(1500));
+
+            async function randomDelay(id) {
+            // 延迟 0~1000 毫秒
+            const delay = Math.random() * 1000;
+            return new Promise((resolve) => setTimeout(() => {
+            console.log(`${id} finished`);
+            resolve();
+            }, delay));
+            }
+            async function foo() {
+            const t0 = Date.now();
+            // for (let i = 0; i < 5; ++i) {
+            // await randomDelay(i);//异步函数的调用与执行，这个会调用5次，每次调用都会打印出id finished
+            // }
+            //如果不需保证运行的顺序，可以先初始化，再执行
+            const p1=randomDelay(1);
+            const p2=randomDelay(2);
+            const p3=randomDelay(3);
+            const p4=randomDelay(4);
+            await p1;
+            await p2;
+            await p3;
+            await p4;//这里则是随机的顺序
+
+            console.log(`${Date.now() - t0}ms elapsed`);//这里表示异步执行所需的时间
+            }
+            foo();//
+
+            //串行执行期约
+            function addsix(x) {return x+6;}
+            function addseven(x) {return x+7;}
+            function addeight(x) {return x+8;}
+
+            async function addmore(x){
+                for(const fn of [addsix,addseven,addeight]){
+                    x= await fn(x);
+                }
+                return x;
+            }
+            addmore(10).then(console.log);
 
 
     </script>
