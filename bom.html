@@ -6,6 +6,25 @@
     <title>bom</title>
 </head>
 <body>
+    <script>
+        var age = 29; 
+        var sayAge = () => alert(this.age); 
+        alert(window.age);
+        sayAge(); // 29 
+        window.sayAge();
+
+        let age = 29; 
+        const sayAge = () => alert(this.age); 
+        alert(window.age); // undefined 
+        sayAge(); // undefined 
+        window.sayAge(); // TypeError: window.sayAge is not a function
+
+        // 这会导致抛出错误，因为 oldValue 没有声明
+        var newValue = oldValue; 
+        // 这不会抛出错误，因为这里是属性查询
+        // newValue 会被设置为 undefined 
+        var newValue = window.oldValue;
+    </script>
     
 </body>
 </html>
