@@ -7,12 +7,15 @@
 </head>
 <body>
     <script>
+        //Global 作用域
+        //通过 var 声明的所有全局变量和函数都会变成 window 对象的属性和方法
         var age = 29; 
         var sayAge = () => alert(this.age); 
         alert(window.age);
         sayAge(); // 29 
         window.sayAge();
 
+        //使用 let 或 const 替代 var，则不会把变量添加给全局对象
         let age = 29; 
         const sayAge = () => alert(this.age); 
         alert(window.age); // undefined 
@@ -24,6 +27,11 @@
         // 这不会抛出错误，因为这里是属性查询
         // newValue 会被设置为 undefined 
         var newValue = window.oldValue;
+
+        //窗口大小
+        //innerWidth、innerHeight、outerWidth 和 outerHeight
+        //outerWidth 和 outerHeight 返回浏览器窗口自身的大小
+        //innerWidth和innerHeight 返回浏览器窗口中页面视口的大小
     </script>
     
 </body>
