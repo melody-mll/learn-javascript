@@ -32,6 +32,17 @@
         //innerWidth、innerHeight、outerWidth 和 outerHeight
         //outerWidth 和 outerHeight 返回浏览器窗口自身的大小
         //innerWidth和innerHeight 返回浏览器窗口中页面视口的大小
+        let pageWidth = window.innerWidth, 
+        pageHeight = window.innerHeight; 
+        if (typeof pageWidth != "number") { 
+        if (document.compatMode == "CSS1Compat"){ 
+        pageWidth = document.documentElement.clientWidth; 
+        pageHeight = document.documentElement.clientHeight; 
+        } else { 
+        pageWidth = document.body.clientWidth; 
+        pageHeight = document.body.clientHeight; 
+        } 
+        }
     </script>
     
 </body>
