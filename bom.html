@@ -43,6 +43,38 @@
         pageHeight = document.body.clientHeight; 
         } 
         }
+
+        // 缩放到 100×100 
+        window.resizeTo(100, 100); 
+        // 缩放到 200×150 
+        window.resizeBy(100, 50); 
+        // 缩放到 300×300 
+        window.resizeTo(300, 300);
+
+        //window.pageXoffset/window.scrollX 和 window.pageYoffset/window.scrollY
+        //可以使用 scroll()、scrollTo()和 scrollBy()方法滚动页面
+
+        // 相对于当前视口向下滚动 100 像素
+        window.scrollBy(0, 100); 
+        // 相对于当前视口向右滚动 40 像素
+        window.scrollBy(40, 0); 
+        // 滚动到页面左上角
+        window.scrollTo(0, 0);
+        // 滚动到距离屏幕左边及顶边各 100 像素的位置
+        window.scrollTo(100, 100);
+
+        // 正常滚动 
+        window.scrollTo({ 
+        left: 100, 
+        top: 100, 
+        behavior: 'auto' 
+        }); 
+        // 平滑滚动
+        window.scrollTo({ 
+        left: 100, 
+        top: 100, 
+        behavior: 'smooth' 
+        });
     </script>
     
 </body>
