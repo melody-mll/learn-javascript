@@ -6,32 +6,45 @@
     <title>bom</title>
 </head>
 <body>
+    <div>bom</div>
     <script>
         //Global 作用域
         //通过 var 声明的所有全局变量和函数都会变成 window 对象的属性和方法
         var age = 29; 
-        var sayAge = () => alert(this.age); 
-        alert(window.age);
+        var sayAge = () => console.log(this.age); //此时的this指向window对象
+        console.log(window.age);//和上式相同
         sayAge(); // 29 
         window.sayAge();
 
         //使用 let 或 const 替代 var，则不会把变量添加给全局对象
-        let age = 29; 
-        const sayAge = () => alert(this.age); 
-        alert(window.age); // undefined 
-        sayAge(); // undefined 
-        window.sayAge(); // TypeError: window.sayAge is not a function
+        let ages = 29; 
+        const sayAges = () => console.log(this.age); 
+        console.log(window.ages); // undefined 
+        sayAges(); // undefined 
+        //window.sayAges(); // TypeError: window.sayAge is not a function
 
+        //访问未声明的变量会抛出错误，但是可以在 window 对象上查询是否存在可能未声明的变量
         // 这会导致抛出错误，因为 oldValue 没有声明
-        var newValue = oldValue; 
+        //var newValue = oldValue; 
         // 这不会抛出错误，因为这里是属性查询
         // newValue 会被设置为 undefined 
         var newValue = window.oldValue;
+        console.log(this);
+
+        //窗口关系
+        // screenLeft和screenTop属性，用于表示窗口相对于屏幕左侧和顶部的位置 
+        window.moveTo(200, 300);
+        // moveTo() 接收要移动到的新位置的绝对坐标 x 和 y；
+        //而 moveBy() 则接收相对当前位置在两个方向上移动的像素数
 
         //窗口大小
         //innerWidth、innerHeight、outerWidth 和 outerHeight
         //outerWidth 和 outerHeight 返回浏览器窗口自身的大小
         //innerWidth和innerHeight 返回浏览器窗口中页面视口的大小
+        console.log(document.documentElement.clientWidth );//表示当前浏览器窗口的宽度
+        console.log( document.documentElement.clientHeight);//表示当前浏览器窗口的高度
+        console.log(window.innerWidth);//表示当前浏览器窗口的宽度
+
         let pageWidth = window.innerWidth, 
         pageHeight = window.innerHeight; 
         if (typeof pageWidth != "number") { 
@@ -42,8 +55,12 @@
         pageWidth = document.body.clientWidth; 
         pageHeight = document.body.clientHeight; 
         } 
+        }else{
+            console.log(11111);
         }
 
+        //视口位置
+        // window.pageXoffset / window.scrollX 和 window.pageYoffset / window.scrollY 这两组返回相同的值
         // 缩放到 100×100 
         window.resizeTo(100, 100); 
         // 缩放到 200×150 
@@ -53,17 +70,19 @@
 
         //window.pageXoffset/window.scrollX 和 window.pageYoffset/window.scrollY
         //可以使用 scroll()、scrollTo()和 scrollBy()方法滚动页面
+        //这三个方法都接受2个参数
+        //这两个参数在前两个方法中表示要滚动到的坐标，在最后一个方法中表示滚动的距离
 
         // 相对于当前视口向下滚动 100 像素
         window.scrollBy(0, 100); 
         // 相对于当前视口向右滚动 40 像素
         window.scrollBy(40, 0); 
         // 滚动到页面左上角
-        window.scrollTo(0, 0);
+        //window.scrollTo(0, 0);
         // 滚动到距离屏幕左边及顶边各 100 像素的位置
-        window.scrollTo(100, 100);
+        //window.scrollTo(100, 100);
 
-        // 正常滚动 
+        // 正常滚动  通过behavior来表示滚动的方式
         window.scrollTo({ 
         left: 100, 
         top: 100, 
@@ -75,6 +94,8 @@
         top: 100, 
         behavior: 'smooth' 
         });
+
+        //导航与打开新窗口
     </script>
     
 </body>
