@@ -96,6 +96,36 @@
         });
 
         //导航与打开新窗口
+        let wroxWin = window.open("http://www.wrox.com", "_blank");
+        if (wroxWin == null){
+        console.log("The popup was blocked!");
+        }
+
+        //定时器
+        //setTimeout用于一段时间后执行某代码
+        //接受两个参数，需要执行的代码和执行回调函数前需要等待的时间
+        //clearTimeout可用于取消超时还没有回调的操作
+        let timeout=setTimeout(()=>console.log('settimeout'),1000);//设置超时任务
+        clearTimeout(timeout);//取消超时任务
+        //setInterval() 用于指定每隔一段时间后执行某代码
+        //setInterval(()=>console.log('setinternal'),1000);//这行代码执行会每隔1秒打印一个setinternal，没有停止命令的话，不会结束，直到页面卸载
+
+        //系统对话框
+        // alert() 、 confirm() 和 prompt() 方法，可以让浏览器调用系统对话框向用户显示消息
+        //这些都是同步执行的，当对话框弹出时，代码会停止运行，直到该同步任务的完成，代码才继续执行
+        //alert('111');
+        let value=confirm("are you sure?");
+        //confirm()有两个选择，确定的话 取得的值是true,取消取得的值是false
+        if(value){
+            alert("true");
+        }
+        let result = prompt("What is your name? ", "");
+        //prompt()有一个对话框，当对话框内输入内容时，取到的值时填写的值,没有的话取到的值是null
+        if(result!==null){
+            alert("value"+result);
+        }
+        //window.print();
+        //window.find();都是异步的
     </script>
     
 </body>
