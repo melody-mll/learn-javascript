@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户端检测</title>
+</head>
+<body>
+    <script>
+      //能力检测
+      if (object.propertyInQuestion) {
+        // 使用 object.propertyInQuestion
+        }
+      //安全能力检测
+      function isSort(object){
+          return !!object.sort;//这种方式并不能检测是否有sort排序方法，如果对象上有sort属性，也会返回true
+      }    
+      function isSorts(object){
+          return typeof object.sort=="function";//这种方式可以检测到object上是否有sort排序方法
+      }
+    </script>
+    
+
+</body>
+</html>
