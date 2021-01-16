@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom</title>
+</head>
+<body>
+    <div id="test">dom</div>
+    <script>
+        //node类型
+        //访问 NodeList 中的元素
+        // let firstChild = someNode.childNodes[0]; 
+        // let secondChild = someNode.childNodes.item(1); 
+        // let count = someNode.childNodes.length;
+        //操作节点
+        //appendChild() 用于在 childNodes 列表末尾添加节点
+        var otest = document.getElementById("test");//得到节点元素
+        var newnode=document.createElement("li");//创建li标签
+        let returnedNode = otest.appendChild(newnode); //给test标签的元素增加li标签
+        console.log(returnedNode == newnode); // true 
+        console.log(otest.lastChild == newnode); // true
+        //let returnedNodes = otest.appendChild(otest.firstChild);//这种方式会把li放在开头位置
+        //let formerFirstChild = otest.removeChild(otest.firstChild);//这种方式用于移除otest的第一个子节点
+        //let formerLastChild = otest.removeChild(otest.lastChild);//用于删除otest的最后一个子节点
+
+        // 其他方法
+        //cloneNode()，会返回与调用它的节点一模一样的节点
+    </script>
+</body>
+</html>
