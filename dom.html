@@ -7,6 +7,19 @@
 </head>
 <body>
     <div id="test">dom</div>
+    <div>
+        <ul>
+            <li>
+                <input type="radio" name="color" value="red" id="red">red
+            </li>
+            <li>
+                <input type="radio" name="color" value="yellow" id="yellow">yellow
+            </li>
+            <li>
+                <input type="radio" name="color" value="blue" id="blue">blue
+            </li>
+        </ul>
+    </div>
     <script>
         //node类型
         //访问 NodeList 中的元素
@@ -58,13 +71,30 @@
         //document.URL 是 http://www.wrox.com/WileyCDA/，则document.domain 就是 www.wrox.com。
         //domain属性可以修改，比如可以将该域名设置为document.domain="wrox.com",但是不能给这个属性设置 URL 中不包含的值
         //对于domain属性不能进行二次更改
-        document.domain = "wrox.com"; //成功
-        document.domain = "p2p.wrox.com"; //错误
-        // 取得来源
+        // document.domain = "wrox.com"; //成功
+        // document.domain = "p2p.wrox.com"; //错误
+        // // 取得来源
         let referrer = document.referrer;
         console.log(referrer);
 
         //定位元素
+        // getElementById() 和 getElementsBy-TagName() 就是 Document 类型提供的两个方法
+        //getElementById()是获取元素节点的id,必须完全匹配。
+        let getele=document.getElementById("ts");
+        let geteles=document.getElementById("test");
+        console.log(getele);//如果没有这个Id,则会返回Null
+        console.log(geteles);//如果完全匹配这个id，则会返回这个节点元素。
+
+        //getElementsByTagName() 这个方法接收一个参数，即要获取元素的标签名
+        let geteletag=document.getElementsByTagName("img");
+        console.log(geteletag);//返回的是HTMLCollection 对象，有length属性和——proto属性
+
+        //获取元素的方法getElementsByName()
+        //通过元素的Name属性得到元素，一般用于单选框，一般同一字段的单选框会有特定的name值
+        let getname=document.getElementsByName("color");//返回给定name属性的所有元素
+        console.log(getname);//得到nodeList数组，分别是input#red,input#yellow,input#blue
+
+        //文档写入
     </script>
 </body>
 </html>
