@@ -7,6 +7,7 @@
 </head>
 <body>
     <div id="test">dom</div>
+    <div id="myDiv" class="bd" title="Body text" lang="en" dir="ltr"></div>
     <div>
         <ul>
             <li>
@@ -95,6 +96,46 @@
         console.log(getname);//得到nodeList数组，分别是input#red,input#yellow,input#blue
 
         //文档写入
+        // write() 和 writeln() 方法都接收一个字符串参数，可以将这个字符串写入网页中。 
+        //write() 简单地写入文本，而 writeln() 还会在字符串末尾追加一个换行符（ \n ）
+        document.write("<strong>"+(new Date()).toString()+"</strong>");//这行会像页面总写入日期
+        // document.write("<script type=\"text/javascript\" src=\"file.js\">" +"<script>");
+        // //这个后面的/script会与开头的script进行匹配，导致页面加载有问题
+        // document.write("<script type=\"text/javascript\" src=\"file.js\">" +"<\/script>");
+        //为了避免这个问题，可以用<\/script>来进行表示
+
+        // window.onload=function(){
+        //     document.write("hello");
+        // }
+        //之前的表示方式是在页面加载过程中进行渲染，如果使用onload事件，则是在页面加载完成之后再加载，则页面被重新渲染
+
+        //Element类型
+      
+        let div = document.getElementById("myDiv");
+        // alert(div.id); // "myDiv"//可以通过i这种方式读取该元素上的属性，或是修改
+        // alert(div.className); // "bd"
+        // alert(div.title); // "Body text"
+        // alert(div.lang); // "en"
+        // alert(div.dir); // "ltr"
+
+        //可以通过getAttribute来读取该元素上的属性，该属性也能读取不是html上自带的属性
+        // alert(div.getAttribute("id")); // "myDiv"
+        // alert(div.getAttribute("class")); // "bd"
+        // alert(div.getAttribute("title")); // "Body text"
+        // alert(div.getAttribute("lang")); // "en"
+        // alert(div.getAttribute("dir")); // "ltr"
+
+        //可以通过setAttribute来更改id的值，可以更改特定属性的值，需要接受两个参数，需要更改的属性，以及更改之后的值
+        //div.setAttribute("id", "someOtherId");
+
+        //给元素上添加自定义属性，不会让他自动变成元素的属性
+        div.mycolor = "red";
+        // alert(div.getAttribute("mycolor")); // null
+
+        //removeAttribute会删除元素上的属性，不仅删除元素的值，而且删除该属性
+        div.removeAttribute("class");
+
+        //创建元素
     </script>
 </body>
 </html>
