@@ -136,6 +136,15 @@
         div.removeAttribute("class");
 
         //创建元素
+
+        //Text类型
+        //创建文本节点
+        //document.createTextNode() 可以用来创建新文本节点，它接收一个参数，即要插入节点的文本
+        let textNode = document.createTextNode("<strong>Hello</strong> world!");
+        let element=document.getElementById("test");
+        element.appendChild(textNode);
+
+        //DOM编程
     </script>
 </body>
 </html>
