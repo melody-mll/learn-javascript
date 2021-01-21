@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dom</title>
+    <!-- 使用 元素包含嵌入的 CSS 规则 -->
+    <style type="text/css">
+        body {
+        background-color: #f2f2f3;
+        }
+    </style>
 </head>
 <body>
     <div id="test">dom</div>
@@ -21,6 +27,18 @@
             </li>
         </ul>
     </div>
+    <table border="1" width="100%">
+        <tbody>
+        <tr>
+        <td>Cell 1,1</td>
+        <td>Cell 2,1</td>
+        </tr>
+        <tr>
+        <td>Cell 1,2</td>
+        <td>Cell 2,2</td>
+        </tr>
+        </tbody>
+    </table>
     <script>
         //node类型
         //访问 NodeList 中的元素
@@ -145,6 +163,13 @@
         element.appendChild(textNode);
 
         //DOM编程
+        //MutationObserver 接口 可以在 DOM 被修改时异步执行回调
+        let observer = new MutationObserver(() => console.log('DOM was mutated!'));
+        //let observe=new MutationObserver(()=>console.log("observe"));
+        //observe()方法
+        //要把这个 observer 与 DOM 关联起来，需要使用 observe() 方法。
+        //这个方法接收两个必需的参数：要观察其变化的 DOM 节点，以及一个 MutationObserverInit 对象
+        observer.observe(document.body, { attributes: true });
     </script>
 </body>
 </html>
