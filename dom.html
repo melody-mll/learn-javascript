@@ -170,6 +170,32 @@
         //要把这个 observer 与 DOM 关联起来，需要使用 observe() 方法。
         //这个方法接收两个必需的参数：要观察其变化的 DOM 节点，以及一个 MutationObserverInit 对象
         observer.observe(document.body, { attributes: true });
+
+        //discount方法
+        let observers = new MutationObserver(() => console.log('<body> attributes changed'));
+        observers.observe(document.body, { attributes: true });
+        document.body.className = 'foo';
+        observers.disconnect();
+        document.body.className = 'bar';
+        console.log(observers);
+
+        let observert = new MutationObserver(() => console.log('<body> attributes changed'));
+        //console.log会执行两次，
+        observert.observe(document.body, { attributes: true });//这个会观察节点变化
+        // 这行代码会触发变化事件
+        document.body.setAttribute('foo', 'bar');
+        setTimeout(() => {
+        observert.disconnect();//已经断开连接，后面的代码不会起作用
+        // 这行代码不会触发变化事件
+        document.body.setAttribute('bar', 'baz');
+        }, 0);
+        setTimeout(() => {
+        observert.observe(document.body, { attributes: true });
+        // 这行代码会触发变化事件
+        document.body.setAttribute('baz', 'qux');
+        }, 0);
+
+        //异步回调与记录队列
     </script>
 </body>
 </html>
