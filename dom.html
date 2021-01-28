@@ -196,6 +196,14 @@
         }, 0);
 
         //异步回调与记录队列
+        //调用 MutationObserver 实例的 takeRecords()方法可以清空记录队列
+        let observer = new MutationObserver((mutationRecords) => console.log(mutationRecords)); 
+        observer.observe(document.body, { attributes: true }); 
+        document.body.className = 'foo'; 
+        document.body.className = 'bar'; 
+        document.body.className = 'baz'; 
+        console.log(observer.takeRecords()); 
+        console.log(observer.takeRecords());
     </script>
 </body>
 </html>
