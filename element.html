@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <html>
+        <form>
+            <input type="text" name="username" value="111">
+            <button name="submit" value="submit" onclick="console.log(username.value)"></button>
+        </form>
+    </html>
+    <script>
+        //
+        function gets(){
+            with(document){
+                with(this.form){
+                    with(this){
+                        username
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
