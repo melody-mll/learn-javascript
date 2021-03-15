@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <html>
+        <button id="btns"></button>
+    </html>
+    <script>
+        let btn=document.getElementById("btns");
+        let handle=function (){
+            console.log(this.id)
+        }
+        btn.addEventListener("click",handle,false);
+        btn.removeEventListener("click",handle,false);//通过该方式移除事件，需要保证绑定的函数是相同的
+        // function handleclick(){
+        //     console.log(this.id)
+        // }
+        // let btn = document.getElementById("btns");
+        // btn.addEventListener("click", () => {
+        //     console.log(this);
+        //     console.log(this.id);
+        // }, false);
+        //  其他代码
+        // btn.removeEventListener("click", function() { //  没有效果！
+        // console.log(this.id);
+        // }, false);
+        // let btn = document.getElementById("btns");
+        // btn.onclick=function(){
+        //     console.log(this.id)
+        // }
+        // btn.addEventListener("click", () => {
+        // console.log(this.id);
+        // }, false);
+        // let btndoc=document.getElementById("btn");
+        // btndoc.addEventListener("click",()=>{
+        //     console.log(this.id);
+        // },false)
+    </script>
+</body>
+</html>
