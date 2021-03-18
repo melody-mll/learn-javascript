@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <html>
+        <div id="myDiv">222</div>
+    </html>
+    <script>
+        // window.addEventListener('load',()=>{
+        //     console.log('load');
+        // })
+        // window.addEventListener("load", () => {
+        //     let script = document.createElement("script");
+        //     console.log(script);
+        //     script.addEventListener("load", (event) => {
+        //     console.log("Loaded");
+        //     });
+        //     script.src = "bom.js";
+        //     document.body.appendChild(script);
+        // })
+        // window.addEventListener("unload",() => {
+        //     console.log('unload');
+        // })
+        // window.addEventListener("scroll", (event) => {
+        //     //console.log(document.body);
+        //     if (document.compatMode == "CSS1Compat") {
+        //         console.log(123);
+        //     console.log(document.documentElement.scrollTop);
+        //     } else {
+        //     console.log(document.body.scrollTop);
+        //     }
+        // })
+        let div = document.getElementById("myDiv");
+        div.addEventListener("click", (event) => {
+        console.log(`Screen coordinates: ${event.screenX}, ${event.screenY}`);
+        });
+    </script>
+</body>
+</html>
