@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+    <input id="inputs" value="input">
+    <input>
+    <textarea rows="5" cols="25"></textarea>
+    </form>
+    <script>
+        //let docu = document.getElementById("inputs");
+        let docu = document.forms[0].elements["inputs"];
+        docu.addEventListener("focus",(e)=>{
+            e.target.select();
+            let value=getSelectedText(docu);
+            alert(value);
+        })
+        function getSelectedText(textbox){
+            return textbox.value.substring(textbox.selectionStart,
+            textbox.selectionEnd);
+        }
+        
+    </script>
+</body>
+</html>
