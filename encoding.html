@@ -8,7 +8,10 @@
 </head>
 <body>
     <div id="files-list">
-
+    <!-- 嵌入视频 -->
+    <video src="conference.mpg" id="myVideo">Video player not available.</video> 
+    <!-- 嵌入音频 -->
+    <audio src="song.mp3" id="myAudio">Audio player not available.</audio> 
     </div>
     <input id="files-lists">
     <script>
@@ -50,6 +53,10 @@
         } 
         } 
         })(); 
+        //slice()方法接收两个参数：起始字节和要读取的字节数。
+        //<audio>和<video>，从而为浏览器提供了嵌入音频和视频的统一解决方案。
+
+
     </script>
 </body>
 </html>
