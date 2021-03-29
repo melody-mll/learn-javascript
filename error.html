@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // InternalError 基本的javascript错误，可能是栈溢出等相关错误
+        // EvalError 会在使用eval()时错误使用时报错，没有将eval当作函数使用报错，eval()
+        // eval()接受一个字符串的形式，若是使用参数形式来进行传值，会报EvalError错误
+        // RangeError 错误会在数值越界时抛出。例如，定义数组时如果设置了并不支持的长度-20
+        // ReferenceError 错误会在找不到对象时报出，例如使用了没有定义的变量
+        // SyntaxError 经常在给 eval() 传入的字符串包含 JavaScript 语法错误时发生
+        // TypeError 在 JavaScript 中很常见，主要发生在变量不是预期类型，或者访问不存在的方法时。
+        // instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上
+        function process(values){
+        if (!(values instanceof Array)){
+        throw new Error("process(): Argument must be an array.");
+        }
+        values.sort();
+        for (let value of values){
+        if (value > 100){
+        return value;
+        }
+        }
+        return -1;
+        }
+        window.onerror = (message, url, line) => {
+        console.log(message);
+        };
+        //process("hahhah");
+        console.log(process([1,2,3,5,4,199,170]));
+        throw new SyntaxError("I don't like your syntax.");//可以自定义的抛出错误
+        throw new InternalError("I can't do that, Dave.");
+        throw new TypeError("What type of variable do you take me for?");
+        throw new RangeError("Sorry, you just don't have the range.");
+        throw new EvalError("That doesn't evaluate.");
+        throw new URIError("Uri, is that you?");
+        throw new ReferenceError("You didn't cite your references properly.");
+        let o = new 10; // 抛出 TypeError
+        console.log("name" in true); // 抛出 TypeError
+        Function.prototype.toString.call("name"); // 抛出 TypeError
+        eval("2++3");
+        let x = y;
+        eval("2+3");
+        let myeval = eval ;
+        myeval("2+3");//这种形式会报错
+        new eval(); // 抛出 EvalError
+        function testFinally(){
+        try {
+            return 2;
+            } catch (error){
+            return 1;
+            } finally {
+            return 0;
+            }
+        }
+        console.log(testFinally());
+    </script>
+</body>
+</html>

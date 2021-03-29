@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="editable" id="richedit" contenteditable></div>
+    <iframe name="richedit" style="height: 100px; width: 100px"></iframe>
+    <script>
+        window.addEventListener("load", () => {
+        frames["richedit"].document.designMode = "on";
+        });
+        let selection = frames["richedit"].getSelection();
+        // 取得选中的文本
+        let selectedText = selection.toString();
+        // 取得表示选区的范围
+        let range = selection.getRangeAt(0);
+        // 高亮选中的文本
+        let span = frames["richedit"].document.createElement("span");
+        span.style.backgroundColor = "yellow";
+        range.surroundContents(span);
+    </script>
+</body>
+</html>
