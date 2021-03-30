@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data = [];
+        // $.ajax({//ajax注册回调函数success,当主线程任务执行完成后，会执行ajax里的回调函数
+        //     url:www.javascript.com,
+        //     data:data,
+        //     success:() => {
+        //         console.log('发送成功!');
+        //     }
+        // })
+        console.log('代码执行结束');
+
+        setTimeout(function(){
+            console.log('1定时器开始啦')
+        });
+
+        new Promise(function(resolve){
+            console.log('2马上执行for循环啦');
+            for(var i = 0; i < 10000; i++){
+                i == 99 && resolve();
+            }
+        }).then(function(){
+            console.log('3执行then函数啦')
+        });
+
+        console.log('4代码执行结束');
+        //代码执行顺序 2 4 3 1 
+
+        //settimeout 定时器
+        setTimeout(() => {
+            fn();
+        }, 0);//这里的0不是表示代码的立即执行，表示的是主线程的任务都执行完毕后，该定时器的任务立即执行，不需要再等待额外的时间
+
+        function timeout(ms) {
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, ms, 'done');
+        });
+        }
+
+        timeout(100).then((value) => {
+        console.log(value);//done
+        });
+
+
+        // const getJSON = function(url) {
+        // const promise = new Promise(function(resolve, reject){
+        //     const handler = function() {
+        //     if (this.readyState !== 4) {
+        //         return;
+        //     }
+        //     if (this.status === 200) {
+        //         resolve(this.response);
+        //     } else {
+        //         reject(new Error(this.statusText));
+        //     }
+        //     };
+        //     const client = new XMLHttpRequest();
+        //     client.open("GET", url);
+        //     client.onreadystatechange = handler;
+        //     client.responseType = "json";
+        //     client.setRequestHeader("Accept", "application/json");
+        //     client.send();
+
+        //     });
+
+        // return promise;
+        // };
+
+        // getJSON("/posts.json").then(function(json) {
+        // console.log('Contents: ' + json);
+        // }, function(error) {
+        // console.error('出错了', error);
+        // });
+
+        console.log('1');
+
+        setTimeout(function() {
+            console.log('2');
+            process.nextTick(function() {
+                console.log('3');
+            })
+            new Promise(function(resolve) {
+                console.log('4');
+                resolve();
+            }).then(function() {
+                console.log('5')
+            })
+        })
+        process.nextTick(function() {
+            console.log('6');
+        })
+        new Promise(function(resolve) {
+            console.log('7');
+            resolve();
+        }).then(function() {
+            console.log('8')
+        })
+
+        setTimeout(function() {
+            console.log('9');
+            process.nextTick(function() {
+                console.log('10');
+            })
+            new Promise(function(resolve) {
+                console.log('11');
+                resolve();
+            }).then(function() {
+                console.log('12')
+            })
+        })
+        //执行顺序： 1 7 6 8 2 4 3 5 9 11 10 12
+
+    </script>
+</body>
+</html>

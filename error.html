@@ -33,22 +33,22 @@
         };
         //process("hahhah");
         console.log(process([1,2,3,5,4,199,170]));
-        throw new SyntaxError("I don't like your syntax.");//可以自定义的抛出错误
-        throw new InternalError("I can't do that, Dave.");
-        throw new TypeError("What type of variable do you take me for?");
-        throw new RangeError("Sorry, you just don't have the range.");
-        throw new EvalError("That doesn't evaluate.");
-        throw new URIError("Uri, is that you?");
-        throw new ReferenceError("You didn't cite your references properly.");
-        let o = new 10; // 抛出 TypeError
-        console.log("name" in true); // 抛出 TypeError
-        Function.prototype.toString.call("name"); // 抛出 TypeError
-        eval("2++3");
-        let x = y;
+        // throw new SyntaxError("I don't like your syntax.");//可以自定义的抛出错误
+        // throw new InternalError("I can't do that, Dave.");
+        // throw new TypeError("What type of variable do you take me for?");
+        // throw new RangeError("Sorry, you just don't have the range.");
+        // throw new EvalError("That doesn't evaluate.");
+        // throw new URIError("Uri, is that you?");
+        // throw new ReferenceError("You didn't cite your references properly.");
+        // let o = new 10; // 抛出 TypeError
+        // console.log("name" in true); // 抛出 TypeError
+        // Function.prototype.toString.call("name"); // 抛出 TypeError
+        // eval("2++3");
+        // let x = y;
         eval("2+3");
-        let myeval = eval ;
-        myeval("2+3");//这种形式会报错
-        new eval(); // 抛出 EvalError
+        // let myeval = eval ;
+        // myeval("2+3");//这种形式会报错
+        // new eval(); // 抛出 EvalError
         function testFinally(){
         try {
             return 2;
@@ -59,6 +59,37 @@
             }
         }
         console.log(testFinally());
+        function concat(str1, str2, str3){
+        let result = str1 + str2;
+        if (typeof str3 === Number) { //  恰当的比较
+            console.log('string');
+            result += str3;
+        }
+        return result;
+        }
+        console.log(concat(1,2,3));
+
+        function getQueryString(url) {//indexOf,substring这两个方法都是字符形式上才有的方法
+            const pos = url.indexOf("?");//通过查找字符串上的？所在的位置，然后返回？后面的字符串
+            if (pos > -1){
+            return url.substring(pos +1);
+            }
+            return "";
+        }
+        console.log(getQueryString("string?number?boolean"))
+
+        const arr = [1,4,5,2,6,9];
+        console.log(arr.sort());
+        const array1 = [1, 30, 4, 21, 100000];
+        
+        console.log(array1.sort());
+
+        function pauseExecution(){
+        console.log("Will print before breakpoint");
+        debugger;
+        console.log("Will not print until breakpoint continues");
+        }
+        pauseExecution();
     </script>
 </body>
 </html>
