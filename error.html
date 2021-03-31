@@ -7,7 +7,19 @@
     <title>Document</title>
 </head>
 <body>
+    <html>
+        <button id="click">11111</button>
+    </html>
+    
     <script>
+        const documents = document.getElementById("click");
+        documents.onclick = function() {
+            console.log(123);
+        var event = window.event;
+        setTimeout(function(){
+        event.returnValue = false; // 未找到成员
+        }, 1000);
+        };
         // InternalError 基本的javascript错误，可能是栈溢出等相关错误
         // EvalError 会在使用eval()时错误使用时报错，没有将eval当作函数使用报错，eval()
         // eval()接受一个字符串的形式，若是使用参数形式来进行传值，会报EvalError错误
@@ -86,7 +98,6 @@
 
         function pauseExecution(){
         console.log("Will print before breakpoint");
-        debugger;
         console.log("Will not print until breakpoint continues");
         }
         pauseExecution();
